@@ -27,7 +27,7 @@ public class HelloWorldView extends HorizontalLayout {
     private final UserRepository userRepository;
     private final Authentication auth;
 
-    public HelloWorldView(UserRepository userRepository, User currentUser) {
+    public HelloWorldView(UserRepository userRepository) {
         this.userRepository = userRepository;
         auth = SecurityContextHolder.getContext().getAuthentication();
 

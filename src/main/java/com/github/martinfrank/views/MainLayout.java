@@ -138,6 +138,7 @@ public class MainLayout extends AppLayout {
         MenuItemInfo[] menuItems = new MenuItemInfo[]{ //
                 new MenuItemInfo("Hello World", "la la-globe", HelloWorldView.class), //
 
+
                 new MenuItemInfo("Hello Home", "la la-globe", HelloHomeView.class), //
 
                 new MenuItemInfo("Hello Me", "la la-globe", HelloMeView.class), //
