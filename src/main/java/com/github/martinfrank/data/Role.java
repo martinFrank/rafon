@@ -1,6 +1,7 @@
 package com.github.martinfrank.data;
 
 public enum Role {
+
     USER("user"), ADMIN("admin");
 
     private String roleName;

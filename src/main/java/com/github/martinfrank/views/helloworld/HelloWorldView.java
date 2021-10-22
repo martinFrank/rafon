@@ -1,14 +1,18 @@
 package com.github.martinfrank.views.helloworld;
 
+import com.github.martinfrank.data.entity.User;
+import com.github.martinfrank.data.service.UserRepository;
+import com.github.martinfrank.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
-import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.PageTitle;
-import com.github.martinfrank.views.MainLayout;
+import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
 import javax.annotation.security.PermitAll;
 
 @PageTitle("Hello World")
@@ -19,16 +23,31 @@ public class HelloWorldView extends HorizontalLayout {
 
     private TextField name;
     private Button sayHello;
+    private Button nameUser;
+    private final UserRepository userRepository;
+    private final Authentication auth;
 
-    public HelloWorldView() {
+    public HelloWorldView(UserRepository userRepository) {
+        this.userRepository = userRepository;
+        auth = SecurityContextHolder.getContext().getAuthentication();
+
         setMargin(true);
         name = new TextField("Your name");
         sayHello = new Button("Say hello");
-        add(name, sayHello);
+        nameUser = new Button("reveal your name");
+        add(name, sayHello, nameUser);
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
         sayHello.addClickListener(e -> {
             Notification.show("Hello " + name.getValue());
         });
+
+        nameUser.addClickListener(e -> {
+            if (auth != null) {
+                User user = (User) auth.getPrincipal();
+                name.setValue(user.getName());
+            }
+        });
+
     }
 
 }
