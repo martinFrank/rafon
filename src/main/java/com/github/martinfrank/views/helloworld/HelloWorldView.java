@@ -1,6 +1,5 @@
 package com.github.martinfrank.views.helloworld;
 
-import com.github.martinfrank.data.entity.User;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -36,15 +35,16 @@ public class HelloWorldView extends HorizontalLayout {
         sayHello = new Button("Say hello");
         nameUser = new Button("reveal your name");
         add(name, sayHello, nameUser);
-        setVerticalComponentAlignment(Alignment.END, name, sayHello);
+        setVerticalComponentAlignment(Alignment.END, name, sayHello,nameUser);
         sayHello.addClickListener(e -> {
             Notification.show("Hello " + name.getValue());
         });
 
         nameUser.addClickListener(e -> {
             if (auth != null) {
-                User user = (User) auth.getPrincipal();
-                name.setValue(user.getName());
+                org.springframework.security.core.userdetails.User user =
+                        (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+                name.setValue(user.getUsername());
             }
         });
 
