@@ -43,8 +43,10 @@ public class HelloWorldView extends HorizontalLayout {
 
         nameUser.addClickListener(e -> {
             if (auth != null) {
-                User user = (User) auth.getDetails();
-                name.setValue(user.getName()+" "+user.getId() );
+                org.springframework.security.core.userdetails.User user =
+                        (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+                User user2 = userRepository.findByUsername(user.getUsername());
+                name.setValue(user2.getName()+" "+user2.getId() );
             }
         });
 
