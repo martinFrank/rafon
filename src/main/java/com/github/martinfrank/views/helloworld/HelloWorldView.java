@@ -1,5 +1,6 @@
 package com.github.martinfrank.views.helloworld;
 
+import com.github.martinfrank.data.entity.User;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -44,6 +45,7 @@ public class HelloWorldView extends HorizontalLayout {
             if (auth != null) {
                 org.springframework.security.core.userdetails.User user =
                         (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+                User user2 = (User) auth.getDetails();
                 name.setValue(user.getUsername());
             }
         });
