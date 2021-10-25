@@ -30,10 +30,9 @@ public class HelloWorldView extends HorizontalLayout {
     public HelloWorldView(UserRepository userRepository, PlayerRepository playerRepository, MapAreaRepository mapAreaRepository) {
         Player currentPlayer = getCurrentPlayer(userRepository, playerRepository);
 
-
         setMargin(true);
         name = new TextField("Your name: ");
-        name.setValue(currentPlayer.getDisplayName());
+        name.setValue(currentPlayer.getDisplayName()+"@"+currentPlayer.getCurrentArea().getMapAreaName());
         sayHello = new Button("Say hello");
         add(name, sayHello);
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
