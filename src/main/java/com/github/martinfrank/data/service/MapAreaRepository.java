@@ -14,6 +14,6 @@ public interface MapAreaRepository extends JpaRepository<MapArea, Integer> {
 //    @Query("select ma from MapArea ma where p.user = user")
 //    MapArea findByPlayer(Player currentPlayer);
 
-    @Query("select p from Player p where p.user = user")
+    //@Query("select p from Player p where p.user = user")
     Player findByUser(@Param("userId") User user);
 }
