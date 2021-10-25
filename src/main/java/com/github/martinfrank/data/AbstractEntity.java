@@ -1,16 +1,17 @@
 package com.github.martinfrank.data;
 
+import com.vaadin.fusion.Nonnull;
+
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import com.vaadin.fusion.Nonnull;
 
 @MappedSuperclass
 public abstract class AbstractEntity {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.AUTO)
     @Nonnull
     private Integer id;
 
