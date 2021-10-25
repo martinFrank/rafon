@@ -51,7 +51,7 @@ public class DataGenerator {
 
             //my user
             User martinUser = new User();
-            martinUser.setName("Martin");
+            martinUser.setName("martin");
             martinUser.setUsername("martin");
             martinUser.setHashedPassword(passwordEncoder.encode("martin"));
             martinUser.setProfilePictureUrl(
@@ -61,7 +61,7 @@ public class DataGenerator {
 
             Player martinPlayer = new Player();
             martinPlayer.setDisplayName("[M@rtin]");
-            martinPlayer.setUser(user);
+            martinPlayer.setUser(martinUser);
 
             MapArea city = new MapArea();
             city.setMapAreaName("city");
@@ -82,7 +82,7 @@ public class DataGenerator {
 
             Player mrxPlayer = new Player();
             mrxPlayer.setDisplayName("Mr. X");
-            mrxPlayer.setUser(user);
+            mrxPlayer.setUser(mrxUser);
 
             mrxPlayer.setCurrentArea(city);
 
