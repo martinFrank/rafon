@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MapAreaRepository extends JpaRepository<MapArea, Integer> {
 
+    MapArea findByMapAreaName(String mapAreaName);
+
 }
