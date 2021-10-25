@@ -1,6 +1,9 @@
 package com.github.martinfrank.views.helloworld;
 
+import com.github.martinfrank.data.entity.Player;
 import com.github.martinfrank.data.entity.User;
+import com.github.martinfrank.data.service.MapAreaRepository;
+import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -23,33 +26,30 @@ public class HelloWorldView extends HorizontalLayout {
 
     private TextField name;
     private Button sayHello;
-    private Button nameUser;
-//    private final UserRepository userRepository;
-    private final Authentication auth;
 
-    public HelloWorldView(UserRepository userRepository) {
-//        this.userRepository = userRepository;
-        auth = SecurityContextHolder.getContext().getAuthentication();
+    public HelloWorldView(UserRepository userRepository, PlayerRepository playerRepository, MapAreaRepository mapAreaRepository) {
+        Player currentPlayer = getCurrentPlayer(userRepository, playerRepository);
+
 
         setMargin(true);
         name = new TextField("Your name");
         sayHello = new Button("Say hello");
-        nameUser = new Button("reveal your name");
-        add(name, sayHello, nameUser);
-        setVerticalComponentAlignment(Alignment.END, name, sayHello,nameUser);
+        add(name, sayHello);
+        setVerticalComponentAlignment(Alignment.END, name, sayHello);
         sayHello.addClickListener(e -> {
             Notification.show("Hello " + name.getValue());
         });
 
-        nameUser.addClickListener(e -> {
-            if (auth != null) {
-                org.springframework.security.core.userdetails.User user =
-                        (org.springframework.security.core.userdetails.User) auth.getPrincipal();
-                User user2 = userRepository.findByUsername(user.getUsername());
-                name.setValue(user2.getName()+" "+user2.getId() );
-            }
-        });
 
+    }
+
+    private Player getCurrentPlayer(UserRepository userRepository, PlayerRepository playerRepository) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        org.springframework.security.core.userdetails.User principal =
+                (org.springframework.security.core.userdetails.User) auth.getPrincipal();
+        User user = userRepository.findByUsername(principal.getUsername());
+        Player player = playerRepository.findByUser(user);
+        return player;
     }
 
 }
