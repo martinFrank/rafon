@@ -1,14 +1,12 @@
 package com.github.martinfrank.data.entity;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 import com.github.martinfrank.data.AbstractEntity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Set;
-import javax.persistence.ElementCollection;
-import javax.persistence.FetchType;
+
 import com.github.martinfrank.data.Role;
-import javax.persistence.Lob;
 
 @Entity
 public class User extends AbstractEntity {
@@ -21,6 +19,9 @@ public class User extends AbstractEntity {
     private Set<Role> roles;
     @Lob
     private String profilePictureUrl;
+
+    @OneToOne(mappedBy = "user")
+    private Player player;
 
     public String getUsername() {
         return username;

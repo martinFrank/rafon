@@ -2,7 +2,9 @@ package com.github.martinfrank.data.entity;
 
 import com.github.martinfrank.data.AbstractEntity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -14,7 +16,8 @@ public class Player extends AbstractEntity {
     private String displayName = "";
 
     @NotNull
-    @OneToOne
+    @OneToOne (cascade = CascadeType.ALL)
+    @JoinColumn(name="user_id", referencedColumnName = "id")
     private User user;
 
     @NotNull

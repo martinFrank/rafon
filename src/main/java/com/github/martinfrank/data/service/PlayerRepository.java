@@ -10,7 +10,6 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     Player findByDisplayName(String displayName);
 
-    @Query("select p from Player p where p.user = user")
-    Player findByUser(@Param("userId") User user);
+    Player findByUser(User user);
 
 }
