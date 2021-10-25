@@ -7,7 +7,7 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-//@Entity
+@Entity
 public class Player extends AbstractEntity {
 
     @NotEmpty
@@ -16,6 +16,10 @@ public class Player extends AbstractEntity {
     @NotNull
     @OneToOne
     private User user;
+
+    @NotNull
+    @OneToOne
+    private MapArea  currentArea;
 
     public String getDisplayName() {
         return displayName;
@@ -31,5 +35,13 @@ public class Player extends AbstractEntity {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public MapArea getCurrentArea() {
+        return currentArea;
+    }
+
+    public void setCurrentArea(MapArea currentArea) {
+        this.currentArea = currentArea;
     }
 }

@@ -1,31 +1,26 @@
 package com.github.martinfrank.data.generator;
 
-import com.github.martinfrank.data.entity.Player;
-import com.github.martinfrank.data.entity.WorldArea;
-import com.vaadin.flow.spring.annotation.SpringComponent;
-
-import com.github.martinfrank.data.service.UserRepository;
-import com.github.martinfrank.data.entity.User;
-import java.util.Collections;
-
-import org.springframework.security.core.parameters.P;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import com.github.martinfrank.data.Role;
-
-import java.time.LocalDateTime;
-
+import com.github.martinfrank.data.entity.MapArea;
+import com.github.martinfrank.data.entity.Player;
+import com.github.martinfrank.data.entity.User;
+import com.github.martinfrank.data.service.MapAreaRepository;
+import com.github.martinfrank.data.service.PlayerRepository;
+import com.github.martinfrank.data.service.UserRepository;
+import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
-import com.vaadin.exampledata.DataType;
-import com.vaadin.exampledata.ExampleDataGenerator;
+import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.Collections;
 
 @SpringComponent
 public class DataGenerator {
 
     @Bean
-    public CommandLineRunner loadData(PasswordEncoder passwordEncoder, UserRepository userRepository) {
+    public CommandLineRunner loadData(PasswordEncoder passwordEncoder, UserRepository userRepository, PlayerRepository playerRepository, MapAreaRepository mapAreaRepository) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             if (userRepository.count() != 0L) {
@@ -68,7 +63,11 @@ public class DataGenerator {
             player.setDisplayName("[M@rtin]");
             player.setUser(user);
 
-            WorldArea areaCity = new WorldArea();
+            MapArea city = new MapArea();
+            player.setCurrentArea(city);
+            mapAreaRepository.save(city);
+
+            playerRepository.save(player);
 
             logger.info("Generated demo data");
         };
