@@ -10,8 +10,8 @@ public interface PlayerRepository extends JpaRepository<Player, Integer> {
 
     Player findByDisplayName(String displayName);
 
-    @Query("select p from Player p, User u where p.userId = p.userId")
-    Player findByUser(@Param("user") User user);
+    @Query("select p from Player p where p.user = user")
+    Player findByUser(@Param("userId") User user);
 
 //    @Query("select c from Contact c " +
 //            "where lower(c.firstName) like lower(concat('%', :searchTerm, '%')) " +
