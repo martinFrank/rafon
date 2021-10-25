@@ -6,10 +6,10 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
-@Entity
-public class QuestItem extends AbstractEntity {
+//@Entity
+public class QuestItem {//extends AbstractEntity {
 
-    @NotEmpty
+//    @NotEmpty
     private String name = "";
 
 

@@ -3,7 +3,6 @@ package com.github.martinfrank.data.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 @Service
 public class RepositoryService {
 
@@ -20,16 +19,27 @@ public class RepositoryService {
         this.userRepository = userRepository;
     }
 
+    public PlayerRepository getPlayerRepository() {
+        return playerRepository;
+    }
+
+    public void setPlayerRepository(PlayerRepository playerRepository) {
+        this.playerRepository = playerRepository;
+    }
+
     public MapAreaRepository getMapAreaRepository() {
         return mapAreaRepository;
     }
 
-    public PlayerRepository getPlayerRepository() {
-        return playerRepository;
+    public void setMapAreaRepository(MapAreaRepository mapAreaRepository) {
+        this.mapAreaRepository = mapAreaRepository;
     }
 
     public UserRepository getUserRepository() {
         return userRepository;
     }
 
+    public void setUserRepository(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 }
