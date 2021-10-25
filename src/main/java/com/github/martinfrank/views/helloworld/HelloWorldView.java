@@ -48,8 +48,7 @@ public class HelloWorldView extends HorizontalLayout {
         org.springframework.security.core.userdetails.User principal =
                 (org.springframework.security.core.userdetails.User) auth.getPrincipal();
         User user = userRepository.findByUsername(principal.getUsername());
-        Player player = playerRepository.findByUser(user);
-        return player;
+        return playerRepository.findByUser(user);
     }
 
 }

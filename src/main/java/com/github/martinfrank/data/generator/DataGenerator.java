@@ -50,25 +50,43 @@ public class DataGenerator {
             userRepository.save(admin);
 
             //my user
-            User userPlayer = new User();
-            userPlayer.setName("Martin");
-            userPlayer.setUsername("martin");
-            userPlayer.setHashedPassword(passwordEncoder.encode("martin"));
-            userPlayer.setProfilePictureUrl(
+            User martinUser = new User();
+            martinUser.setName("Martin");
+            martinUser.setUsername("martin");
+            martinUser.setHashedPassword(passwordEncoder.encode("martin"));
+            martinUser.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
-            userPlayer.setRoles(Collections.singleton(Role.USER));
-            userRepository.save(userPlayer);
+            martinUser.setRoles(Collections.singleton(Role.USER));
+            userRepository.save(martinUser);
 
-            Player player = new Player();
-            player.setDisplayName("[M@rtin]");
-            player.setUser(user);
+            Player martinPlayer = new Player();
+            martinPlayer.setDisplayName("[M@rtin]");
+            martinPlayer.setUser(user);
 
             MapArea city = new MapArea();
             city.setMapAreaName("city");
-            player.setCurrentArea(city);
+            martinPlayer.setCurrentArea(city);
             mapAreaRepository.save(city);
 
-            playerRepository.save(player);
+            playerRepository.save(martinPlayer);
+
+            //another user
+            User mrxUser = new User();
+            mrxUser.setName("mrx");
+            mrxUser.setUsername("mrx");
+            mrxUser.setHashedPassword(passwordEncoder.encode("mrx"));
+            mrxUser.setProfilePictureUrl(
+                    "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
+            mrxUser.setRoles(Collections.singleton(Role.USER));
+            userRepository.save(mrxUser);
+
+            Player mrxPlayer = new Player();
+            mrxPlayer.setDisplayName("Mr. X");
+            mrxPlayer.setUser(user);
+
+            mrxPlayer.setCurrentArea(city);
+
+            playerRepository.save(mrxPlayer);
 
             logger.info("Generated demo data");
         };
