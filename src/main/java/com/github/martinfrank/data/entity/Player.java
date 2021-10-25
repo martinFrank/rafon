@@ -2,12 +2,10 @@ package com.github.martinfrank.data.entity;
 
 import com.github.martinfrank.data.AbstractEntity;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.Set;
 
 @Entity
 public class Player extends AbstractEntity {
@@ -23,6 +21,9 @@ public class Player extends AbstractEntity {
     @NotNull
     @OneToOne
     private MapArea  currentArea;
+
+    @OneToMany(mappedBy="player")
+    private Set<QuestItem> items;
 
     public String getDisplayName() {
         return displayName;

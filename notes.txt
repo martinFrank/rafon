@@ -1,3 +1,5 @@
 
 
 https://www.baeldung.com/jpa-one-to-one
+https://www.baeldung.com/jpa-many-to-many
+https://www.baeldung.com/hibernate-one-to-many
