@@ -23,7 +23,7 @@ public class Player extends AbstractEntity {
     private MapArea  currentArea;
 
     @OneToMany(mappedBy="player")
-    private Set<QuestItem> items;
+    private Set<QuestItem> questItems;
 
     public String getDisplayName() {
         return displayName;
@@ -48,4 +48,13 @@ public class Player extends AbstractEntity {
     public void setCurrentArea(MapArea currentArea) {
         this.currentArea = currentArea;
     }
+
+    public Set<QuestItem> getQuestItems() {
+        return questItems;
+    }
+
+    public void setQuestItems(Set<QuestItem> questItems) {
+        this.questItems = questItems;
+    }
+
 }

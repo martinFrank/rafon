@@ -23,6 +23,27 @@ public class QuestItem extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "map_area_id"))
     private Set<MapArea> grantedAccess;
 
+    public String getName() {
+        return name;
+    }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
+    public Player getPlayer() {
+        return player;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public Set<MapArea> getGrantedAccess() {
+        return grantedAccess;
+    }
+
+    public void setGrantedAccess(Set<MapArea> grantedAccess) {
+        this.grantedAccess = grantedAccess;
+    }
 }

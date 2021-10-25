@@ -23,4 +23,13 @@ public class MapArea extends AbstractEntity {
 
     @ManyToMany
     private Set<QuestItem> accessGiver;
+
+    public Set<QuestItem> getAccessGiver() {
+        return accessGiver;
+    }
+
+    public void setAccessGiver(Set<QuestItem> accessGiver) {
+        this.accessGiver = accessGiver;
+    }
+
 }

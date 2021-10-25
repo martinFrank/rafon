@@ -9,14 +9,17 @@ public class RepositoryService {
     private PlayerRepository playerRepository;
     private MapAreaRepository mapAreaRepository;
     private UserRepository userRepository;
+    private QuestItemRepository questItemRepository;
 
     public RepositoryService(
             @Autowired PlayerRepository playerRepository,
             @Autowired MapAreaRepository mapAreaRepository,
-            @Autowired UserRepository userRepository) {
+            @Autowired UserRepository userRepository,
+            @Autowired QuestItemRepository questItemRepository) {
         this.playerRepository = playerRepository;
         this.mapAreaRepository = mapAreaRepository;
         this.userRepository = userRepository;
+        this.questItemRepository = questItemRepository;
     }
 
     public PlayerRepository getPlayerRepository() {
@@ -41,5 +44,13 @@ public class RepositoryService {
 
     public void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    public QuestItemRepository getQuestItemRepository() {
+        return questItemRepository;
+    }
+
+    public void setQuestItemRepository(QuestItemRepository questItemRepository) {
+        this.questItemRepository = questItemRepository;
     }
 }

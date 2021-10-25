@@ -3,10 +3,9 @@ package com.github.martinfrank.data.generator;
 import com.github.martinfrank.data.Role;
 import com.github.martinfrank.data.entity.MapArea;
 import com.github.martinfrank.data.entity.Player;
+import com.github.martinfrank.data.entity.QuestItem;
 import com.github.martinfrank.data.entity.User;
-import com.github.martinfrank.data.service.MapAreaRepository;
-import com.github.martinfrank.data.service.PlayerRepository;
-import com.github.martinfrank.data.service.UserRepository;
+import com.github.martinfrank.data.service.RepositoryService;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,18 +14,22 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @SpringComponent
 public class DataGenerator {
 
     @Bean
     public CommandLineRunner loadData(PasswordEncoder passwordEncoder,
-                                      UserRepository userRepository,
-                                      PlayerRepository playerRepository,
-                                      MapAreaRepository mapAreaRepository) {
+//                                      UserRepository userRepository,
+//                                      PlayerRepository playerRepository,
+//                                      MapAreaRepository mapAreaRepository
+                                      RepositoryService repositoryService
+                                      ) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
-            if (userRepository.count() != 0L) {
+            if (repositoryService.getUserRepository().count() != 0L) {
                 logger.info("Using existing database");
                 return;
             }
@@ -42,7 +45,7 @@ public class DataGenerator {
             user.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             user.setRoles(Collections.singleton(Role.USER));
-            userRepository.save(user);
+            repositoryService.getUserRepository().save(user);
             User admin = new User();
             admin.setName("John Normal");
             admin.setUsername("admin");
@@ -50,7 +53,7 @@ public class DataGenerator {
             admin.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             admin.setRoles(Collections.singleton(Role.ADMIN));
-            userRepository.save(admin);
+            repositoryService.getUserRepository().save(admin);
 
             //my user
             User martinUser = new User();
@@ -60,7 +63,7 @@ public class DataGenerator {
             martinUser.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             martinUser.setRoles(Collections.singleton(Role.USER));
-            userRepository.save(martinUser);
+            repositoryService.getUserRepository().save(martinUser);
 
             Player martinPlayer = new Player();
             martinPlayer.setDisplayName("[M@rtin]");
@@ -69,9 +72,9 @@ public class DataGenerator {
             MapArea city = new MapArea();
             city.setMapAreaName("city");
             martinPlayer.setCurrentArea(city);
-            mapAreaRepository.save(city);
+            repositoryService.getMapAreaRepository().save(city);
 
-            playerRepository.save(martinPlayer);
+            repositoryService.getPlayerRepository().save(martinPlayer);
 
             //another user
             User mrxUser = new User();
@@ -81,7 +84,7 @@ public class DataGenerator {
             mrxUser.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             mrxUser.setRoles(Collections.singleton(Role.USER));
-            userRepository.save(mrxUser);
+            repositoryService.getUserRepository().save(mrxUser);
 
             Player mrxPlayer = new Player();
             mrxPlayer.setDisplayName("Mr. X");
@@ -89,7 +92,20 @@ public class DataGenerator {
 
             mrxPlayer.setCurrentArea(city);
 
-            playerRepository.save(mrxPlayer);
+            repositoryService.getPlayerRepository().save(mrxPlayer);
+
+            //quest items
+            QuestItem mapOfTheArea = new QuestItem();
+            mapOfTheArea.setName("map of the area");
+            Set<MapArea> areas = new HashSet<>();
+            areas.add(city);
+            mapOfTheArea.setGrantedAccess(areas);
+            repositoryService.getQuestItemRepository().save(mapOfTheArea);
+
+            Set<QuestItem> questItems = new HashSet<>();
+            questItems.add(mapOfTheArea);
+            martinPlayer.setQuestItems(questItems);
+            repositoryService.getPlayerRepository().save(martinPlayer);
 
             logger.info("Generated demo data");
         };
