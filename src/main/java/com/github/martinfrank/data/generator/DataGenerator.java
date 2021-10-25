@@ -20,7 +20,10 @@ import java.util.Collections;
 public class DataGenerator {
 
     @Bean
-    public CommandLineRunner loadData(PasswordEncoder passwordEncoder, UserRepository userRepository, PlayerRepository playerRepository, MapAreaRepository mapAreaRepository) {
+    public CommandLineRunner loadData(PasswordEncoder passwordEncoder,
+                                      UserRepository userRepository,
+                                      PlayerRepository playerRepository,
+                                      MapAreaRepository mapAreaRepository) {
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             if (userRepository.count() != 0L) {

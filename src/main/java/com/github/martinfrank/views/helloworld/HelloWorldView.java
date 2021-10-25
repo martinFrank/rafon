@@ -1,9 +1,10 @@
+
 package com.github.martinfrank.views.helloworld;
 
 import com.github.martinfrank.data.entity.Player;
 import com.github.martinfrank.data.entity.User;
-import com.github.martinfrank.data.service.MapAreaRepository;
 import com.github.martinfrank.data.service.PlayerRepository;
+import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
@@ -27,12 +28,15 @@ public class HelloWorldView extends HorizontalLayout {
     private TextField name;
     private Button sayHello;
 
-    public HelloWorldView(UserRepository userRepository, PlayerRepository playerRepository, MapAreaRepository mapAreaRepository) {
-        Player currentPlayer = getCurrentPlayer(userRepository, playerRepository);
+    //    public HelloWorldView(UserRepository userRepository, PlayerRepository playerRepository, MapAreaRepository mapAreaRepository) {
+    public HelloWorldView(RepositoryService service) {
+//        Player currentPlayer = getCurrentPlayer(service.getUserRuserRepository, playerRepository);
 
         setMargin(true);
         name = new TextField("Your name: ");
-        name.setValue(currentPlayer.getDisplayName()+"@"+currentPlayer.getCurrentArea().getMapAreaName());
+//        name.setValue(currentPlayer.getDisplayName() + "@" + currentPlayer.getCurrentArea().getMapAreaName());
+        String test = service == null?"null":"service.user"+service.getUserRepository();
+        name.setValue(""+service);
         sayHello = new Button("Say hello");
         add(name, sayHello);
         setVerticalComponentAlignment(Alignment.END, name, sayHello);
