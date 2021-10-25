@@ -38,22 +38,33 @@ public class DataGenerator {
             logger.info("Generating demo data");
 
             logger.info("... generating 2 User entities...");
-            User user = new User();
-            user.setName("John Normal");
-            user.setUsername("user");
-            user.setHashedPassword(passwordEncoder.encode("user"));
-            user.setProfilePictureUrl(
-                    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
-            user.setRoles(Collections.singleton(Role.USER));
-            repositoryService.getUserRepository().save(user);
-            User admin = new User();
-            admin.setName("John Normal");
-            admin.setUsername("admin");
-            admin.setHashedPassword(passwordEncoder.encode("admin"));
-            admin.setProfilePictureUrl(
-                    "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
-            admin.setRoles(Collections.singleton(Role.ADMIN));
-            repositoryService.getUserRepository().save(admin);
+//            User user = new User();
+//            user.setName("John Normal");
+//            user.setUsername("user");
+//            user.setHashedPassword(passwordEncoder.encode("user"));
+//            user.setProfilePictureUrl(
+//                    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
+//            user.setRoles(Collections.singleton(Role.USER));
+//            repositoryService.getUserRepository().save(user);
+//            User admin = new User();
+//            admin.setName("John Normal");
+//            admin.setUsername("admin");
+//            admin.setHashedPassword(passwordEncoder.encode("admin"));
+//            admin.setProfilePictureUrl(
+//                    "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
+//            admin.setRoles(Collections.singleton(Role.ADMIN));
+//            repositoryService.getUserRepository().save(admin);
+//            logger.info("done create two default user");
+
+
+            MapArea city = new MapArea();
+            city.setMapAreaName("city");
+            repositoryService.getMapAreaRepository().save(city);
+
+            MapArea home = new MapArea();
+            home.setMapAreaName("home");
+            repositoryService.getMapAreaRepository().save(home);
+
 
             //my user
             User martinUser = new User();
@@ -63,18 +74,18 @@ public class DataGenerator {
             martinUser.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             martinUser.setRoles(Collections.singleton(Role.USER));
-            repositoryService.getUserRepository().save(martinUser);
+            //repositoryService.getUserRepository().save(martinUser);
 
             Player martinPlayer = new Player();
             martinPlayer.setDisplayName("[M@rtin]");
             martinPlayer.setUser(martinUser);
 
-            MapArea city = new MapArea();
-            city.setMapAreaName("city");
-            martinPlayer.setCurrentArea(city);
-            repositoryService.getMapAreaRepository().save(city);
+            martinPlayer.setCurrentArea(home);
+
+
 
             repositoryService.getPlayerRepository().save(martinPlayer);
+            repositoryService.getUserRepository().save(martinUser);
 
             //another user
             User mrxUser = new User();
@@ -84,21 +95,23 @@ public class DataGenerator {
             mrxUser.setProfilePictureUrl(
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             mrxUser.setRoles(Collections.singleton(Role.USER));
-            repositoryService.getUserRepository().save(mrxUser);
+
 
             Player mrxPlayer = new Player();
             mrxPlayer.setDisplayName("Mr. X");
             mrxPlayer.setUser(mrxUser);
 
-            mrxPlayer.setCurrentArea(city);
+            mrxPlayer.setCurrentArea(home);
 
             repositoryService.getPlayerRepository().save(mrxPlayer);
+            repositoryService.getUserRepository().save(mrxUser);
 
             //quest items
             QuestItem mapOfTheArea = new QuestItem();
             mapOfTheArea.setName("map of the area");
             Set<MapArea> areas = new HashSet<>();
             areas.add(city);
+            areas.add(home);
             mapOfTheArea.setGrantedAccess(areas);
             repositoryService.getQuestItemRepository().save(mapOfTheArea);
 
@@ -106,6 +119,11 @@ public class DataGenerator {
             questItems.add(mapOfTheArea);
             martinPlayer.setQuestItems(questItems);
             repositoryService.getPlayerRepository().save(martinPlayer);
+
+            Set<QuestItem> questItems2 = new HashSet<>();
+            questItems2.add(mapOfTheArea);
+            mrxPlayer.setQuestItems(questItems2);
+            repositoryService.getPlayerRepository().save(mrxPlayer);
 
             logger.info("Generated demo data");
         };

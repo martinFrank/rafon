@@ -14,15 +14,19 @@ public class Player extends AbstractEntity {
     private String displayName = "";
 
     @NotNull
-    @OneToOne (cascade = CascadeType.ALL)
-    @JoinColumn(name="user_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @NotNull
     @OneToOne
-    private MapArea  currentArea;
+    private MapArea currentArea;
 
-    @OneToMany(mappedBy="player")
+    @ManyToMany
+    @JoinTable(
+            name = "player_quest_item",
+            joinColumns = @JoinColumn(name = "player_id"),
+            inverseJoinColumns = @JoinColumn(name = "quest_item_id"))
     private Set<QuestItem> questItems;
 
     public String getDisplayName() {

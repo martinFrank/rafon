@@ -12,13 +12,9 @@ public class QuestItem extends AbstractEntity {
     @NotEmpty
     private String name = "";
 
-    @ManyToOne
-    @JoinColumn(name="player", nullable=false)
-    private Player player;
-
     @ManyToMany
     @JoinTable(
-            name = "grantedAccess",
+            name = "granted_access",
             joinColumns = @JoinColumn(name = "quest_item_id"),
             inverseJoinColumns = @JoinColumn(name = "map_area_id"))
     private Set<MapArea> grantedAccess;
@@ -31,14 +27,6 @@ public class QuestItem extends AbstractEntity {
         this.name = name;
     }
 
-    public Player getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Set<MapArea> getGrantedAccess() {
         return grantedAccess;
     }
@@ -46,4 +34,5 @@ public class QuestItem extends AbstractEntity {
     public void setGrantedAccess(Set<MapArea> grantedAccess) {
         this.grantedAccess = grantedAccess;
     }
+
 }
