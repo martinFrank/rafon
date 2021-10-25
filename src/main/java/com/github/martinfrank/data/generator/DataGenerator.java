@@ -64,6 +64,7 @@ public class DataGenerator {
             player.setUser(user);
 
             MapArea city = new MapArea();
+            city.setMapAreaName("city");
             player.setCurrentArea(city);
             mapAreaRepository.save(city);
 

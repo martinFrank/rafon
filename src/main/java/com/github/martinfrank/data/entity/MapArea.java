@@ -11,4 +11,11 @@ public class MapArea extends AbstractEntity {
     @NotEmpty
     private String mapAreaName = "";
 
+    public String getMapAreaName() {
+        return mapAreaName;
+    }
+
+    public void setMapAreaName(String mapAreaName) {
+        this.mapAreaName = mapAreaName;
+    }
 }
