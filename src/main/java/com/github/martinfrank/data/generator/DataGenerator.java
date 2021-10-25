@@ -1,10 +1,14 @@
 package com.github.martinfrank.data.generator;
 
+import com.github.martinfrank.data.entity.Player;
+import com.github.martinfrank.data.entity.WorldArea;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.data.entity.User;
 import java.util.Collections;
+
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import com.github.martinfrank.data.Role;
 
@@ -49,6 +53,22 @@ public class DataGenerator {
                     "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
             admin.setRoles(Collections.singleton(Role.ADMIN));
             userRepository.save(admin);
+
+            //my user
+            User userPlayer = new User();
+            userPlayer.setName("Martin");
+            userPlayer.setUsername("martin");
+            userPlayer.setHashedPassword(passwordEncoder.encode("martin"));
+            userPlayer.setProfilePictureUrl(
+                    "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
+            userPlayer.setRoles(Collections.singleton(Role.USER));
+            userRepository.save(userPlayer);
+
+            Player player = new Player();
+            player.setDisplayName("[M@rtin]");
+            player.setUser(user);
+
+            WorldArea areaCity = new WorldArea();
 
             logger.info("Generated demo data");
         };

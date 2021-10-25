@@ -24,11 +24,11 @@ public class HelloWorldView extends HorizontalLayout {
     private TextField name;
     private Button sayHello;
     private Button nameUser;
-    private final UserRepository userRepository;
+//    private final UserRepository userRepository;
     private final Authentication auth;
 
     public HelloWorldView(UserRepository userRepository) {
-        this.userRepository = userRepository;
+//        this.userRepository = userRepository;
         auth = SecurityContextHolder.getContext().getAuthentication();
 
         setMargin(true);
