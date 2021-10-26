@@ -71,6 +71,7 @@ public class DataGenerator {
             repositoryService.getMapAreaRepository().save(home);
 
             Set<MapArea> subAreas = new HashSet<>();
+            subAreas.add(world);
             subAreas.add(city);
             subAreas.add(home);
             world.setSubMapAreas(subAreas);

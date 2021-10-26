@@ -3,3 +3,32 @@
 https://www.baeldung.com/jpa-one-to-one
 https://www.baeldung.com/jpa-many-to-many
 https://www.baeldung.com/hibernate-one-to-many
+
+
+https://spring.io/guides/gs/spring-boot/
+sudo bash ./mvnw spring-boot:run
+
+dockerize it
+https://vaadin.com/learn/tutorials/docker-container
+mvn install -Pproduction
+java -jar target/rafon-1.0-SNAPSHOT.jar
+docker build -t vaadin-docker .
+
+dockerfile:
+FROM openjdk:11
+WORKDIR /
+ADD target/rafon-1.0-SNAPSHOT.jar app.jar
+RUN useradd -m myuser
+USER myuser
+EXPOSE 8090
+CMD java -jar -Dspring.profiles.active=prod app.jar
+
+
+run docker image
+docker run -ti -p 8090:8080 vaadin-docker
+
+upgrage portainer:
+docker pull portainer/portainer
+docker stop portainer
+docker rm portainer
+docker run ... <your run parameters etc>
