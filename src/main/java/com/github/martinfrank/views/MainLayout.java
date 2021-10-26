@@ -1,46 +1,25 @@
 package com.github.martinfrank.views;
 
+import com.github.martinfrank.data.entity.User;
+import com.github.martinfrank.security.AuthenticatedUser;
+import com.github.martinfrank.views.about.AboutView;
+import com.github.martinfrank.views.hellohome.HelloHomeView;
+import com.github.martinfrank.views.hellome.HelloMeView;
+import com.github.martinfrank.views.helloworld.HelloWorldView;
+import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.applayout.DrawerToggle;
+import com.vaadin.flow.component.avatar.Avatar;
+import com.vaadin.flow.component.button.ButtonVariant;
+import com.vaadin.flow.component.contextmenu.ContextMenu;
+import com.vaadin.flow.component.html.*;
+import com.vaadin.flow.router.PageTitle;
+import com.vaadin.flow.router.RouterLink;
+import com.vaadin.flow.server.auth.AccessAnnotationChecker;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
-import com.vaadin.flow.component.Component;
-import com.vaadin.flow.component.ComponentUtil;
-import com.vaadin.flow.component.Text;
-import com.vaadin.flow.component.applayout.AppLayout;
-import com.vaadin.flow.component.applayout.DrawerToggle;
-import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.html.Image;
-import com.vaadin.flow.component.html.ListItem;
-import com.vaadin.flow.component.html.Nav;
-import com.vaadin.flow.component.html.Span;
-import com.vaadin.flow.component.html.UnorderedList;
-import com.vaadin.flow.component.html.Footer;
-import com.vaadin.flow.component.html.H1;
-import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.H3;
-import com.vaadin.flow.component.html.Header;
-import com.vaadin.flow.component.orderedlayout.FlexComponent;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.orderedlayout.VerticalLayout;
-import com.vaadin.flow.component.tabs.Tab;
-import com.vaadin.flow.component.tabs.Tabs;
-import com.vaadin.flow.component.tabs.TabsVariant;
-import com.vaadin.flow.router.RouterLink;
-import com.vaadin.flow.router.Route;
-import com.vaadin.flow.router.PageTitle;
-import com.github.martinfrank.views.MainLayout;
-import com.github.martinfrank.views.helloworld.HelloWorldView;
-import com.github.martinfrank.views.hellohome.HelloHomeView;
-import com.github.martinfrank.views.hellome.HelloMeView;
-import com.github.martinfrank.views.about.AboutView;
-import com.github.martinfrank.views.login.LoginView;
-import com.vaadin.flow.component.avatar.Avatar;
-import com.github.martinfrank.data.entity.User;
-import com.github.martinfrank.security.AuthenticatedUser;
-import com.vaadin.flow.server.auth.AccessAnnotationChecker;
-import com.vaadin.flow.component.contextmenu.ContextMenu;
-import com.vaadin.flow.component.html.Anchor;
 
 /**
  * The main view is a top-level placeholder for other views.
@@ -137,7 +116,6 @@ public class MainLayout extends AppLayout {
     private List<RouterLink> createLinks() {
         MenuItemInfo[] menuItems = new MenuItemInfo[]{ //
                 new MenuItemInfo("Hello World", "la la-globe", HelloWorldView.class), //
-
 
                 new MenuItemInfo("Hello Home", "la la-globe", HelloHomeView.class), //
 

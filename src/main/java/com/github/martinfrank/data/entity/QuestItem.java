@@ -12,7 +12,7 @@ public class QuestItem extends AbstractEntity {
     @NotEmpty
     private String name = "";
 
-    @ManyToMany
+    @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
             name = "item_granted_map_area_access",
             joinColumns = @JoinColumn(name = "quest_item_id"),

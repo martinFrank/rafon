@@ -3,6 +3,7 @@ package com.github.martinfrank.views.helloworld;
 
 import com.github.martinfrank.data.entity.MapArea;
 import com.github.martinfrank.data.entity.Player;
+import com.github.martinfrank.data.entity.QuestItem;
 import com.github.martinfrank.data.entity.User;
 import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
@@ -22,6 +23,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import javax.annotation.security.PermitAll;
+import java.util.HashSet;
+import java.util.Set;
 
 @PageTitle("Hello World")
 @Route(value = "world", layout = MainLayout.class)
@@ -49,11 +52,32 @@ public class HelloWorldView extends VerticalLayout {
         removeAll();
         location.setValue(currentPlayer.getCurrentArea().getMapAreaName());
         add(location);
+        Set<MapArea> filteredAreas = filterMapAreasByQuestItem();
         for (MapArea mapArea : currentPlayer.getCurrentArea().getSubMapAreas()) {
             Button button = new Button(mapArea.getMapAreaName());
             button.addClickListener(e -> travelTo(mapArea));
             add(button);
         }
+    }
+
+    private Set<MapArea> filterMapAreasByQuestItem() {
+        Set<MapArea> areas = currentPlayer.getCurrentArea().getSubMapAreas();
+        Set<MapArea> grantedByQuestItems = getGrantedAreas();
+        Set<MapArea> merge = new HashSet<>();
+        for(MapArea area: areas){
+            if(grantedByQuestItems.contains(area)){
+                merge.add(area);
+            }
+        }
+        return merge;
+    }
+
+    private Set<MapArea> getGrantedAreas() {
+        Set<MapArea> granted = new HashSet<>();
+        for(QuestItem qi: currentPlayer.getQuestItems()) {
+            granted.addAll(qi.getGrantedAccess());
+        }
+        return granted;
     }
 
     private void travelTo(MapArea mapArea) {
