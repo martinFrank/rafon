@@ -8,7 +8,6 @@ import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -36,20 +35,13 @@ public class HelloWorldView extends VerticalLayout {
     public HelloWorldView(RepositoryService service) {
         this.service = service;
         currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
-        //initiate lazy loading
-        int size = currentPlayer.getCurrentArea().getSubMapAreas().size();
-        logger.info("size of sub-Areas: {}", size);
 
         setMargin(true);
         location = new TextField("Your are here:");
-        location.setValue(currentPlayer.getCurrentArea().getMapAreaName());
-        add(location);
+        location.setReadOnly(true);
 
-        for (MapArea mapArea : currentPlayer.getCurrentArea().getSubMapAreas()) {
-            Button button = new Button(mapArea.getMapAreaName());
-            button.addClickListener(e -> travelTo(mapArea));
-            add(button);
-        }
+        recreatePage();
+
 
 //        String test = service == null?"null":"service.user"+service.getUserRepository();
 //        name.setValue(""+service);
@@ -63,10 +55,22 @@ public class HelloWorldView extends VerticalLayout {
 
     }
 
+    private void recreatePage() {
+        removeAll();
+        location.setValue(currentPlayer.getCurrentArea().getMapAreaName());
+        add(location);
+        for (MapArea mapArea : currentPlayer.getCurrentArea().getSubMapAreas()) {
+            Button button = new Button(mapArea.getMapAreaName());
+            button.addClickListener(e -> travelTo(mapArea));
+            add(button);
+        }
+    }
+
     private void travelTo(MapArea mapArea) {
-        currentPlayer.setCurrentArea(mapArea);
+        MapArea destiny = service.getMapAreaRepository().findByMapAreaName(mapArea.getMapAreaName());//initiate lazy loading
+        currentPlayer.setCurrentArea(destiny);
         service.getPlayerRepository().save(currentPlayer);
-        UI.getCurrent().getPage().reload();
+        recreatePage();
     }
 
     private Player getCurrentPlayer(UserRepository userRepository, PlayerRepository playerRepository) {
