@@ -70,6 +70,10 @@ public class DataGenerator {
             home.setMapAreaName("home");
             repositoryService.getMapAreaRepository().save(home);
 
+            MapArea meadow = new MapArea();
+            meadow.setMapAreaName("meadow");
+            repositoryService.getMapAreaRepository().save(meadow);
+
             Set<MapArea> worldSubAreas = new HashSet<>();
             worldSubAreas.add(city);
             worldSubAreas.add(home);
@@ -78,6 +82,7 @@ public class DataGenerator {
 
             Set<MapArea> citySubAreas = new HashSet<>();
             citySubAreas.add(world);
+            citySubAreas.add(meadow);
             city.setSubMapAreas(citySubAreas);
             repositoryService.getMapAreaRepository().save(city);
 
@@ -85,6 +90,11 @@ public class DataGenerator {
             homeSubAreas.add(world);
             home.setSubMapAreas(homeSubAreas);
             repositoryService.getMapAreaRepository().save(home);
+
+            Set<MapArea> meadowSubAreas = new HashSet<>();
+            meadowSubAreas.add(city);
+            meadow.setSubMapAreas(meadowSubAreas);
+            repositoryService.getMapAreaRepository().save(meadow);
 
 
             logger.info("... generating 2 User entities...");
