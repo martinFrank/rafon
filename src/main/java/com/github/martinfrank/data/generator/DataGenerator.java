@@ -116,6 +116,7 @@ public class DataGenerator {
             Set<MapAreaAction> sideAlleyActions = new HashSet<>();
             sideAlleyActions.add(lookingForTroubleAction);
             shadySideAlley.setAreaActions(sideAlleyActions);
+            repositoryService.getMapAreaRepository().save(shadySideAlley);
 
 
 
