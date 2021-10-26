@@ -93,7 +93,7 @@ public class DataGenerator {
             martinPlayer.setDisplayName("[M@rtin]");
             martinPlayer.setUser(martinUser);
 
-            martinPlayer.setCurrentArea(home);
+            martinPlayer.setCurrentArea(world);
 
 
 
@@ -114,7 +114,7 @@ public class DataGenerator {
             mrxPlayer.setDisplayName("Mr. X");
             mrxPlayer.setUser(mrxUser);
 
-            mrxPlayer.setCurrentArea(home);
+            mrxPlayer.setCurrentArea(world);
 
             repositoryService.getPlayerRepository().save(mrxPlayer);
             repositoryService.getUserRepository().save(mrxUser);
