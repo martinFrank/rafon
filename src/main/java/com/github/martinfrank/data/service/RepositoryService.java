@@ -10,16 +10,19 @@ public class RepositoryService {
     private MapAreaRepository mapAreaRepository;
     private UserRepository userRepository;
     private QuestItemRepository questItemRepository;
+    private MapAreaActionRepository mapAreaActionRepository;
 
     public RepositoryService(
             @Autowired PlayerRepository playerRepository,
             @Autowired MapAreaRepository mapAreaRepository,
             @Autowired UserRepository userRepository,
-            @Autowired QuestItemRepository questItemRepository) {
+            @Autowired QuestItemRepository questItemRepository,
+            @Autowired MapAreaActionRepository mapAreaActionRepository) {
         this.playerRepository = playerRepository;
         this.mapAreaRepository = mapAreaRepository;
         this.userRepository = userRepository;
         this.questItemRepository = questItemRepository;
+        this.mapAreaActionRepository = mapAreaActionRepository;
     }
 
     public PlayerRepository getPlayerRepository() {
@@ -52,5 +55,13 @@ public class RepositoryService {
 
     public void setQuestItemRepository(QuestItemRepository questItemRepository) {
         this.questItemRepository = questItemRepository;
+    }
+
+    public MapAreaActionRepository getMapAreaActionRepository() {
+        return mapAreaActionRepository;
+    }
+
+    public void setMapAreaActionRepository(MapAreaActionRepository mapAreaActionRepository) {
+        this.mapAreaActionRepository = mapAreaActionRepository;
     }
 }

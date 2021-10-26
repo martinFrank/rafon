@@ -1,10 +1,7 @@
 package com.github.martinfrank.data.generator;
 
 import com.github.martinfrank.data.Role;
-import com.github.martinfrank.data.entity.MapArea;
-import com.github.martinfrank.data.entity.Player;
-import com.github.martinfrank.data.entity.QuestItem;
-import com.github.martinfrank.data.entity.User;
+import com.github.martinfrank.data.entity.*;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.vaadin.flow.spring.annotation.SpringComponent;
 import org.slf4j.Logger;
@@ -59,20 +56,24 @@ public class DataGenerator {
             logger.info("... generating area entities...");
 
             MapArea world = new MapArea();
-            world.setMapAreaName("world");
+            world.setName("world");
             repositoryService.getMapAreaRepository().save(world);
 
             MapArea city = new MapArea();
-            city.setMapAreaName("city");
+            city.setName("city");
             repositoryService.getMapAreaRepository().save(city);
 
             MapArea home = new MapArea();
-            home.setMapAreaName("home");
+            home.setName("home");
             repositoryService.getMapAreaRepository().save(home);
 
             MapArea meadow = new MapArea();
-            meadow.setMapAreaName("meadow");
+            meadow.setName("meadow");
             repositoryService.getMapAreaRepository().save(meadow);
+
+            MapArea shadySideAlley = new MapArea();
+            shadySideAlley.setName("shady side alley");
+            repositoryService.getMapAreaRepository().save(shadySideAlley);
 
             Set<MapArea> worldSubAreas = new HashSet<>();
             worldSubAreas.add(city);
@@ -82,6 +83,7 @@ public class DataGenerator {
 
             Set<MapArea> citySubAreas = new HashSet<>();
             citySubAreas.add(world);
+            citySubAreas.add(shadySideAlley);
             citySubAreas.add(meadow);
             city.setSubMapAreas(citySubAreas);
             repositoryService.getMapAreaRepository().save(city);
@@ -95,6 +97,26 @@ public class DataGenerator {
             meadowSubAreas.add(city);
             meadow.setSubMapAreas(meadowSubAreas);
             repositoryService.getMapAreaRepository().save(meadow);
+
+            Set<MapArea> shadySideAlleySubAreas = new HashSet<>();
+            shadySideAlleySubAreas.add(city);
+            shadySideAlley.setSubMapAreas(shadySideAlleySubAreas);
+            repositoryService.getMapAreaRepository().save(shadySideAlley);
+
+//            MapAreaAction harvestAction = new MapAreaAction();
+//            harvestAction.setName("harvest");
+//            repositoryService.getMapAreaActionRepository().save(harvestAction);
+
+
+
+            MapAreaAction lookingForTroubleAction = new MapAreaAction();
+            lookingForTroubleAction.setName("looking for trouble");
+            repositoryService.getMapAreaActionRepository().save(lookingForTroubleAction);
+
+            Set<MapAreaAction> sideAlleyActions = new HashSet<>();
+            sideAlleyActions.add(lookingForTroubleAction);
+            shadySideAlley.setAreaActions(sideAlleyActions);
+
 
 
             logger.info("... generating 2 User entities...");
@@ -146,6 +168,7 @@ public class DataGenerator {
             Set<MapArea> areas = new HashSet<>();
             areas.add(world);
             areas.add(city);
+            areas.add(shadySideAlley);
             areas.add(home);
             mapOfTheArea.setGrantedAccess(areas);
             repositoryService.getQuestItemRepository().save(mapOfTheArea);

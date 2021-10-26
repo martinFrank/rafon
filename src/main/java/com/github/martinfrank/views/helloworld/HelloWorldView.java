@@ -1,10 +1,7 @@
 
 package com.github.martinfrank.views.helloworld;
 
-import com.github.martinfrank.data.entity.MapArea;
-import com.github.martinfrank.data.entity.Player;
-import com.github.martinfrank.data.entity.QuestItem;
-import com.github.martinfrank.data.entity.User;
+import com.github.martinfrank.data.entity.*;
 import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
@@ -12,6 +9,8 @@ import com.github.martinfrank.views.MainLayout;
 import com.github.martinfrank.views.hellohome.HelloHomeView;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.html.Hr;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -40,7 +39,6 @@ public class HelloWorldView extends VerticalLayout {
     public HelloWorldView(RepositoryService service) {
         this.service = service;
         currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
-
         setMargin(true);
         location = new TextField("Your are here:");
         location.setReadOnly(true);
@@ -50,21 +48,35 @@ public class HelloWorldView extends VerticalLayout {
 
     private void recreatePage() {
         removeAll();
-        location.setValue(currentPlayer.getCurrentArea().getMapAreaName());
+        location.setValue(currentPlayer.getCurrentArea().getName());
         add(location);
+        Set<MapAreaAction> mapAreaActions = currentPlayer.getCurrentArea().getAreaActions();
+        if(!mapAreaActions.isEmpty()){
+            add(new Hr());
+        }
+        for (MapAreaAction mapAreaAction : mapAreaActions) {
+            Button button = new Button(mapAreaAction.getName());
+            button.addClickListener(e -> executeAction(mapAreaAction));
+            add(button);
+        }
         Set<MapArea> filteredAreas = filterMapAreasByQuestItem();
+        if(!filteredAreas.isEmpty()){
+            add(new Hr());
+        }
         for (MapArea mapArea : filteredAreas) {
-            Button button = new Button(mapArea.getMapAreaName());
+            Button button = new Button(mapArea.getName());
             button.addClickListener(e -> travelTo(mapArea));
             add(button);
         }
     }
 
+    private void executeAction(MapAreaAction mapAreaAction) {
+        Notification.show("action "+mapAreaAction.getName()+"... coming soon...");
+    }
+
     private Set<MapArea> filterMapAreasByQuestItem() {
         Set<MapArea> areas = currentPlayer.getCurrentArea().getSubMapAreas();
         Set<MapArea> grantedByQuestItems = getGrantedAreas();
-        LOGGER.debug("---- SET OF AREAS: {} ----",areas);
-        LOGGER.debug("---- SET OF ITEMS: {} ----",grantedByQuestItems);
         Set<MapArea> merge = new HashSet<>();
         for(MapArea area: areas){
             if(grantedByQuestItems.contains(area)){
@@ -83,12 +95,12 @@ public class HelloWorldView extends VerticalLayout {
     }
 
     private void travelTo(MapArea mapArea) {
-        if (HelloHomeView.HOME_MAP_AREA_NAME.equals(mapArea.getMapAreaName())) {
+        if (HelloHomeView.HOME_MAP_AREA_NAME.equals(mapArea.getName())) {
             UI.getCurrent().navigate("home");
             return;
         }
 
-        MapArea destiny = service.getMapAreaRepository().findByMapAreaName(mapArea.getMapAreaName());//initiate lazy loading
+        MapArea destiny = service.getMapAreaRepository().findByMapAreaName(mapArea.getName());//initiate lazy loading
         currentPlayer.setCurrentArea(destiny);
         service.getPlayerRepository().save(currentPlayer);
         recreatePage();

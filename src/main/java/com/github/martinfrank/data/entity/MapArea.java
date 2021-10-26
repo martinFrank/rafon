@@ -10,7 +10,7 @@ import java.util.Set;
 public class MapArea extends AbstractEntity {
 
     @NotEmpty
-    private String mapAreaName = "";
+    private String name = "";
 
     @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
@@ -19,12 +19,19 @@ public class MapArea extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "sub_map_area_id"))
     private Set<MapArea> subMapAreas;
 
-    public String getMapAreaName() {
-        return mapAreaName;
+    @ManyToMany (fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "map_area_action_mapping",
+            joinColumns = @JoinColumn(name = "map_area_id"),
+            inverseJoinColumns = @JoinColumn(name = "action_id"))
+    private Set<MapAreaAction> areaActions;
+
+    public String getName() {
+        return name;
     }
 
-    public void setMapAreaName(String mapAreaName) {
-        this.mapAreaName = mapAreaName;
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -34,5 +41,13 @@ public class MapArea extends AbstractEntity {
 
     public void setSubMapAreas(Set<MapArea> subMapAreas) {
         this.subMapAreas = subMapAreas;
+    }
+
+    public Set<MapAreaAction> getAreaActions() {
+        return areaActions;
+    }
+
+    public void setAreaActions(Set<MapAreaAction> areaActions) {
+        this.areaActions = areaActions;
     }
 }
