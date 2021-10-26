@@ -15,6 +15,8 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
@@ -29,18 +31,21 @@ public class HelloWorldView extends VerticalLayout {
     private TextField location;
     private Player currentPlayer;
     private RepositoryService service;
-
+    private static final Logger logger = LoggerFactory.getLogger(HelloWorldView.class);
 
     public HelloWorldView(RepositoryService service) {
         this.service = service;
         currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
+        //initiate lazy loading
+        int size = currentPlayer.getCurrentArea().getSubMapAreas().size();
+        logger.info("size of sub-Areas: {}", size);
 
         setMargin(true);
         location = new TextField("Your are here:");
         location.setValue(currentPlayer.getCurrentArea().getMapAreaName());
         add(location);
 
-        for(MapArea mapArea: currentPlayer.getCurrentArea().getSubMapAreas()){
+        for (MapArea mapArea : currentPlayer.getCurrentArea().getSubMapAreas()) {
             Button button = new Button(mapArea.getMapAreaName());
             button.addClickListener(e -> travelTo(mapArea));
             add(button);
