@@ -8,6 +8,8 @@ import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
+import com.github.martinfrank.views.hellohome.HelloHomeView;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -55,6 +57,11 @@ public class HelloWorldView extends VerticalLayout {
     }
 
     private void travelTo(MapArea mapArea) {
+        if (HelloHomeView.HOME_MAP_AREA_NAME.equals(mapArea.getMapAreaName())) {
+            UI.getCurrent().navigate("home");
+            return;
+        }
+
         MapArea destiny = service.getMapAreaRepository().findByMapAreaName(mapArea.getMapAreaName());//initiate lazy loading
         currentPlayer.setCurrentArea(destiny);
         service.getPlayerRepository().save(currentPlayer);

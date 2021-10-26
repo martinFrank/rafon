@@ -23,7 +23,7 @@ public class HelloHomeView extends HorizontalLayout {
 
     private TextField homeText;
 
-    private static final String HOME_AREA_NAME = "home";
+    public static final String HOME_MAP_AREA_NAME = "home";
 
     private final RepositoryService service;
     private final Player currentPlayer;
@@ -31,7 +31,7 @@ public class HelloHomeView extends HorizontalLayout {
     public HelloHomeView(RepositoryService service) {
         this.service = service;
         currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
-        MapArea homeMapArea = service.getMapAreaRepository().findByMapAreaName(HOME_AREA_NAME);
+        MapArea homeMapArea = service.getMapAreaRepository().findByMapAreaName(HOME_MAP_AREA_NAME);
         currentPlayer.setCurrentArea(homeMapArea);
         service.getPlayerRepository().save(currentPlayer);
 
