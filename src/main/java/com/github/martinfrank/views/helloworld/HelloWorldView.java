@@ -35,7 +35,7 @@ public class HelloWorldView extends VerticalLayout {
     private final TextField location;
     private final Player currentPlayer;
     private final RepositoryService service;
-    private static final Logger logger = LoggerFactory.getLogger(HelloWorldView.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldView.class);
 
     public HelloWorldView(RepositoryService service) {
         this.service = service;
@@ -63,6 +63,8 @@ public class HelloWorldView extends VerticalLayout {
     private Set<MapArea> filterMapAreasByQuestItem() {
         Set<MapArea> areas = currentPlayer.getCurrentArea().getSubMapAreas();
         Set<MapArea> grantedByQuestItems = getGrantedAreas();
+        LOGGER.debug("---- SET OF AREAS: {} ----",areas);
+        LOGGER.debug("---- SET OF ITEMS: {} ----",grantedByQuestItems);
         Set<MapArea> merge = new HashSet<>();
         for(MapArea area: areas){
             if(grantedByQuestItems.contains(area)){
