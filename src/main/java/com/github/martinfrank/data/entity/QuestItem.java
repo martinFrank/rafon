@@ -14,7 +14,7 @@ public class QuestItem extends AbstractEntity {
 
     @ManyToMany
     @JoinTable(
-            name = "granted_access",
+            name = "item_granted_map_area_access",
             joinColumns = @JoinColumn(name = "quest_item_id"),
             inverseJoinColumns = @JoinColumn(name = "map_area_id"))
     private Set<MapArea> grantedAccess;
