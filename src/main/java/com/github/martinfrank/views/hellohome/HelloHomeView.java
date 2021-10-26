@@ -31,7 +31,7 @@ public class HelloHomeView extends HorizontalLayout {
     public HelloHomeView(RepositoryService service) {
         this.service = service;
         currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
-        MapArea homeMapArea = service.getMapAreaRepository().findByMapAreaName(HOME_MAP_AREA_NAME);
+        MapArea homeMapArea = service.getMapAreaRepository().findByName(HOME_MAP_AREA_NAME);
         currentPlayer.setCurrentArea(homeMapArea);
         service.getPlayerRepository().save(currentPlayer);
 

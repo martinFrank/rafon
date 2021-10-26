@@ -100,7 +100,7 @@ public class HelloWorldView extends VerticalLayout {
             return;
         }
 
-        MapArea destiny = service.getMapAreaRepository().findByMapAreaName(mapArea.getName());//initiate lazy loading
+        MapArea destiny = service.getMapAreaRepository().findByName(mapArea.getName());//initiate lazy loading
         currentPlayer.setCurrentArea(destiny);
         service.getPlayerRepository().save(currentPlayer);
         recreatePage();

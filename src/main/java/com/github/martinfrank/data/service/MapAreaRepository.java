@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MapAreaRepository extends JpaRepository<MapArea, Integer> {
 
-    MapArea findByMapAreaName(String mapAreaName);
+    MapArea findByName(String mapAreaName);
 
 //    @Query("select ma from MapArea ma where p.user = user")
 //    MapArea findByPlayer(Player currentPlayer);
