@@ -27,32 +27,21 @@ import javax.annotation.security.PermitAll;
 @PermitAll
 public class HelloWorldView extends VerticalLayout {
 
-    private TextField location;
-    private Player currentPlayer;
-    private RepositoryService service;
+    private final TextField location;
+    private final Player currentPlayer;
+    private final RepositoryService service;
     private static final Logger logger = LoggerFactory.getLogger(HelloWorldView.class);
 
     public HelloWorldView(RepositoryService service) {
         this.service = service;
         currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
+        service.getMapAreaRepository().findByMapAreaName(currentPlayer.getCurrentArea().getMapAreaName());
 
         setMargin(true);
         location = new TextField("Your are here:");
         location.setReadOnly(true);
 
         recreatePage();
-
-
-//        String test = service == null?"null":"service.user"+service.getUserRepository();
-//        name.setValue(""+service);
-//        sayHello = new Button("Say hello");
-//        add(name, sayHello);
-//        setVerticalComponentAlignment(Alignment.END, name, sayHello);
-//        sayHello.addClickListener(e -> {
-//            Notification.show("Hello " + name.getValue());
-//        });
-
-
     }
 
     private void recreatePage() {
