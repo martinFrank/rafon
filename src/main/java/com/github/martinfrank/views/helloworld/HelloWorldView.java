@@ -1,15 +1,16 @@
 
 package com.github.martinfrank.views.helloworld;
 
+import com.github.martinfrank.data.entity.MapArea;
 import com.github.martinfrank.data.entity.Player;
 import com.github.martinfrank.data.entity.User;
 import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -23,28 +24,44 @@ import javax.annotation.security.PermitAll;
 @Route(value = "world", layout = MainLayout.class)
 @RouteAlias(value = "", layout = MainLayout.class)
 @PermitAll
-public class HelloWorldView extends HorizontalLayout {
+public class HelloWorldView extends VerticalLayout {
 
-    private TextField name;
-    private Button sayHello;
+    private TextField location;
+    private Player currentPlayer;
+    private RepositoryService service;
 
-    //    public HelloWorldView(UserRepository userRepository, PlayerRepository playerRepository, MapAreaRepository mapAreaRepository) {
+
     public HelloWorldView(RepositoryService service) {
-//        Player currentPlayer = getCurrentPlayer(service.getUserRuserRepository, playerRepository);
+        this.service = service;
+        currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
 
         setMargin(true);
-        name = new TextField("Your name: ");
-//        name.setValue(currentPlayer.getDisplayName() + "@" + currentPlayer.getCurrentArea().getMapAreaName());
-        String test = service == null?"null":"service.user"+service.getUserRepository();
-        name.setValue(""+service);
-        sayHello = new Button("Say hello");
-        add(name, sayHello);
-        setVerticalComponentAlignment(Alignment.END, name, sayHello);
-        sayHello.addClickListener(e -> {
-            Notification.show("Hello " + name.getValue());
-        });
+        location = new TextField("Your are here:");
+        location.setValue(currentPlayer.getCurrentArea().getMapAreaName());
+        add(location);
+
+        for(MapArea mapArea: currentPlayer.getCurrentArea().getSubMapAreas()){
+            Button button = new Button(mapArea.getMapAreaName());
+            button.addClickListener(e -> travelTo(mapArea));
+            add(button);
+        }
+
+//        String test = service == null?"null":"service.user"+service.getUserRepository();
+//        name.setValue(""+service);
+//        sayHello = new Button("Say hello");
+//        add(name, sayHello);
+//        setVerticalComponentAlignment(Alignment.END, name, sayHello);
+//        sayHello.addClickListener(e -> {
+//            Notification.show("Hello " + name.getValue());
+//        });
 
 
+    }
+
+    private void travelTo(MapArea mapArea) {
+        currentPlayer.setCurrentArea(mapArea);
+        service.getPlayerRepository().save(currentPlayer);
+        UI.getCurrent().getPage().reload();
     }
 
     private Player getCurrentPlayer(UserRepository userRepository, PlayerRepository playerRepository) {
