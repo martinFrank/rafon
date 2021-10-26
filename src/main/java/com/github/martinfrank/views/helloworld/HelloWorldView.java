@@ -14,7 +14,6 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouteAlias;
-import org.hibernate.Hibernate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.Authentication;
@@ -36,8 +35,6 @@ public class HelloWorldView extends VerticalLayout {
     public HelloWorldView(RepositoryService service) {
         this.service = service;
         currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
-//        service.getMapAreaRepository().findByMapAreaName(currentPlayer.getCurrentArea().getMapAreaName());
-        Hibernate.unproxy(currentPlayer.getCurrentArea().getSubMapAreas());
 
         setMargin(true);
         location = new TextField("Your are here:");
@@ -58,9 +55,8 @@ public class HelloWorldView extends VerticalLayout {
     }
 
     private void travelTo(MapArea mapArea) {
-//        MapArea destiny = service.getMapAreaRepository().findByMapAreaName(mapArea.getMapAreaName());//initiate lazy loading
-        currentPlayer.setCurrentArea(mapArea);
-        Hibernate.unproxy(currentPlayer.getCurrentArea().getSubMapAreas());
+        MapArea destiny = service.getMapAreaRepository().findByMapAreaName(mapArea.getMapAreaName());//initiate lazy loading
+        currentPlayer.setCurrentArea(destiny);
         service.getPlayerRepository().save(currentPlayer);
         recreatePage();
     }

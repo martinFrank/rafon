@@ -2,10 +2,7 @@ package com.github.martinfrank.data.entity;
 
 import com.github.martinfrank.data.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
 
@@ -15,7 +12,7 @@ public class MapArea extends AbstractEntity {
     @NotEmpty
     private String mapAreaName = "";
 
-    @ManyToMany// (fetch = FetchType.EAGER)
+    @ManyToMany (fetch = FetchType.EAGER)
     @JoinTable(
             name = "map_area_connection",
             joinColumns = @JoinColumn(name = "parent_map_area_id"),
