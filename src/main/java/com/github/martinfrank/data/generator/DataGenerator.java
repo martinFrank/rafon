@@ -37,7 +37,7 @@ public class DataGenerator {
 
             logger.info("Generating demo data");
 
-            logger.info("... generating 2 User entities...");
+
 //            User user = new User();
 //            user.setName("John Normal");
 //            user.setUsername("user");
@@ -56,6 +56,11 @@ public class DataGenerator {
 //            repositoryService.getUserRepository().save(admin);
 //            logger.info("done create two default user");
 
+            logger.info("... generating area entities...");
+
+            MapArea world = new MapArea();
+            world.setMapAreaName("world");
+            repositoryService.getMapAreaRepository().save(world);
 
             MapArea city = new MapArea();
             city.setMapAreaName("city");
@@ -65,7 +70,14 @@ public class DataGenerator {
             home.setMapAreaName("home");
             repositoryService.getMapAreaRepository().save(home);
 
+            Set<MapArea> subAreas = new HashSet<>();
+            subAreas.add(city);
+            subAreas.add(home);
+            world.setSubMapAreas(subAreas);
+            repositoryService.getMapAreaRepository().save(world);
 
+
+            logger.info("... generating 2 User entities...");
             //my user
             User martinUser = new User();
             martinUser.setName("martin");
@@ -106,10 +118,13 @@ public class DataGenerator {
             repositoryService.getPlayerRepository().save(mrxPlayer);
             repositoryService.getUserRepository().save(mrxUser);
 
+            logger.info("... generating quest item entities...");
+
             //quest items
             QuestItem mapOfTheArea = new QuestItem();
-            mapOfTheArea.setName("map of the area");
+            mapOfTheArea.setName("map of the world");
             Set<MapArea> areas = new HashSet<>();
+            areas.add(world);
             areas.add(city);
             areas.add(home);
             mapOfTheArea.setGrantedAccess(areas);
