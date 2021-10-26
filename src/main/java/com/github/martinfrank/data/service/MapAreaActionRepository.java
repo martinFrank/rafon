@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MapAreaActionRepository extends JpaRepository<MapAreaAction, Integer> {
 
-    MapAreaAction findByMapAreaName(String mapAreaName);
+    MapAreaAction findByName(String mapAreaActionName);
 
 }
