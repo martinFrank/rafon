@@ -22,7 +22,7 @@ public class Player extends AbstractEntity {
     @OneToOne
     private MapArea currentArea;
 
-    @ManyToMany
+    @ManyToMany //(fetch = FetchType.EAGER)
     @JoinTable(
             name = "player_quest_item",
             joinColumns = @JoinColumn(name = "player_id"),
