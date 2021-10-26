@@ -53,7 +53,7 @@ public class HelloWorldView extends VerticalLayout {
         location.setValue(currentPlayer.getCurrentArea().getMapAreaName());
         add(location);
         Set<MapArea> filteredAreas = filterMapAreasByQuestItem();
-        for (MapArea mapArea : currentPlayer.getCurrentArea().getSubMapAreas()) {
+        for (MapArea mapArea : filteredAreas) {
             Button button = new Button(mapArea.getMapAreaName());
             button.addClickListener(e -> travelTo(mapArea));
             add(button);
