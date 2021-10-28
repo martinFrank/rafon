@@ -39,27 +39,17 @@ public class HelloHomeView extends HorizontalLayout {
         service.getPlayerRepository().save(currentPlayer);
 
         setMargin(true);
-        homeText = new TextField("You are home again");
+        homeText = new TextField("welcome home");
         homeText.setValue(currentPlayer.getDisplayName());
         homeText.setReadOnly(true);
         add(homeText);
 
         if(currentPlayer.getCombat() != null){
-            Notification.show("you are in combat and cannot go home - you are being brought back to combat...");
-            new Thread(() -> {
-                try {
-                    Thread.sleep(500);
-                    navigateToWorld();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }).start();
+            Notification.show("you are in a battle and cannot go home");
+            UI.getCurrent().navigate(HelloWorldView.WORLD_MAP_AREA_NAME);
         }
     }
 
-    private void navigateToWorld() {
-        UI.getCurrent().navigate(HelloWorldView.WORLD_MAP_AREA_NAME);
-    }
 
     private Player getCurrentPlayer(UserRepository userRepository, PlayerRepository playerRepository) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
