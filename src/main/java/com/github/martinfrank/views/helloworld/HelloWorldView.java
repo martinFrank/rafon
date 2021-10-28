@@ -103,6 +103,7 @@ public class HelloWorldView extends VerticalLayout {
     private void executeAction(MapAreaAction mapAreaAction) {
         Combat combat = new Combat();
         Opponent shadyGuy = service.getOpponentRepository().findByName("shady guy");
+        LOGGER.info("--- shady guy: {} ---", shadyGuy);
         combat.setOpponent(shadyGuy);
         combat.setName("test");
         combat.setOpponentLife(shadyGuy.getMaxLife());
