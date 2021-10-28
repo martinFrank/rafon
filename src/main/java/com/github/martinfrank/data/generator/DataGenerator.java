@@ -17,13 +17,14 @@ import java.util.Set;
 @SpringComponent
 public class DataGenerator {
 
+    private static final String IMG_URL = "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80";
+    private PasswordEncoder passwordEncoder;
+
+
+
     @Bean
-    public CommandLineRunner loadData(PasswordEncoder passwordEncoder,
-//                                      UserRepository userRepository,
-//                                      PlayerRepository playerRepository,
-//                                      MapAreaRepository mapAreaRepository
-                                      RepositoryService repositoryService
-                                      ) {
+    public CommandLineRunner loadData(PasswordEncoder passwordEncoder, RepositoryService repositoryService) {
+        this.passwordEncoder = passwordEncoder;
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             if (repositoryService.getUserRepository().count() != 0L) {
@@ -33,26 +34,6 @@ public class DataGenerator {
             int seed = 123;
 
             logger.info("Generating demo data");
-
-
-//            User user = new User();
-//            user.setName("John Normal");
-//            user.setUsername("user");
-//            user.setHashedPassword(passwordEncoder.encode("user"));
-//            user.setProfilePictureUrl(
-//                    "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
-//            user.setRoles(Collections.singleton(Role.USER));
-//            repositoryService.getUserRepository().save(user);
-//            User admin = new User();
-//            admin.setName("John Normal");
-//            admin.setUsername("admin");
-//            admin.setHashedPassword(passwordEncoder.encode("admin"));
-//            admin.setProfilePictureUrl(
-//                    "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
-//            admin.setRoles(Collections.singleton(Role.ADMIN));
-//            repositoryService.getUserRepository().save(admin);
-//            logger.info("done create two default user");
-
             logger.info("... generating area entities...");
 
             MapArea world = new MapArea();
@@ -103,10 +84,16 @@ public class DataGenerator {
             shadySideAlley.setSubMapAreas(shadySideAlleySubAreas);
             repositoryService.getMapAreaRepository().save(shadySideAlley);
 
-//            MapAreaAction harvestAction = new MapAreaAction();
-//            harvestAction.setName("harvest");
-//            repositoryService.getMapAreaActionRepository().save(harvestAction);
 
+            //actions
+            MapAreaAction harvestAction = new MapAreaAction();
+            harvestAction.setName("harvest");
+            repositoryService.getMapAreaActionRepository().save(harvestAction);
+
+            Set<MapAreaAction> meadowActions = new HashSet<>();
+            meadowActions.add(harvestAction);
+            meadow.setAreaActions(meadowActions);
+            repositoryService.getMapAreaRepository().save(meadow);
 
 
             MapAreaAction lookingForTroubleAction = new MapAreaAction();
@@ -122,40 +109,16 @@ public class DataGenerator {
 
             logger.info("... generating 2 User entities...");
             //my user
-            User martinUser = new User();
-            martinUser.setName("martin");
-            martinUser.setUsername("martin");
-            martinUser.setHashedPassword(passwordEncoder.encode("martin"));
-            martinUser.setProfilePictureUrl(
-                    "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
-            martinUser.setRoles(Collections.singleton(Role.USER));
-            //repositoryService.getUserRepository().save(martinUser);
-
-            Player martinPlayer = new Player();
-            martinPlayer.setDisplayName("[M@rtin]");
-            martinPlayer.setUser(martinUser);
-
+            User martinUser = createUser("martin","martin","martin",IMG_URL, Role.USER);
+            Player martinPlayer = createPlayer("[M@rtin]", martinUser, 20L, 20L);
             martinPlayer.setCurrentArea(world);
-
-
 
             repositoryService.getPlayerRepository().save(martinPlayer);
             repositoryService.getUserRepository().save(martinUser);
 
             //another user
-            User mrxUser = new User();
-            mrxUser.setName("mrx");
-            mrxUser.setUsername("mrx");
-            mrxUser.setHashedPassword(passwordEncoder.encode("mrx"));
-            mrxUser.setProfilePictureUrl(
-                    "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80");
-            mrxUser.setRoles(Collections.singleton(Role.USER));
-
-
-            Player mrxPlayer = new Player();
-            mrxPlayer.setDisplayName("Mr. X");
-            mrxPlayer.setUser(mrxUser);
-
+            User mrxUser = createUser("mrx",  "mrx", "mrx",IMG_URL, Role.USER);
+            Player mrxPlayer = createPlayer("Mr. X", mrxUser, 20L, 20L);
             mrxPlayer.setCurrentArea(world);
 
             repositoryService.getPlayerRepository().save(mrxPlayer);
@@ -184,8 +147,34 @@ public class DataGenerator {
             mrxPlayer.setQuestItems(questItems2);
             repositoryService.getPlayerRepository().save(mrxPlayer);
 
+            Opponent shadyGuy = new Opponent();
+            shadyGuy.setName("shady guy");
+            shadyGuy.setMaxLife(20L);
+            repositoryService.getOpponentRepository().save(shadyGuy);
+
             logger.info("Generated demo data");
         };
+    }
+
+    private Player createPlayer(String displayName, User user, long life, long endurance) {
+        Player player = new Player();
+        player.setDisplayName(displayName);
+        player.setUser(user);
+        player.setCurrentLife(life);
+        player.setMaxLife(life);
+        player.setMaxEndurance(endurance);
+        player.setCurrentEndurance(endurance);
+        return player;
+    }
+
+    private User createUser(String name, String username, String pass, String imageUrl, Role role) {
+        User user = new User();
+        user.setName(name);
+        user.setUsername(username);
+        user.setHashedPassword(passwordEncoder.encode(pass));
+        user.setProfilePictureUrl(imageUrl);
+        user.setRoles(Collections.singleton(role));
+        return user;
     }
 
 }

@@ -71,7 +71,8 @@ public class HelloWorldView extends VerticalLayout {
     }
 
     private void executeAction(MapAreaAction mapAreaAction) {
-        Notification.show("action "+mapAreaAction.getName()+"... coming soon...");
+               Notification.show("execute action "+mapAreaAction.getName()+": coming soon...");
+
     }
 
     private Set<MapArea> filterMapAreasByQuestItem() {

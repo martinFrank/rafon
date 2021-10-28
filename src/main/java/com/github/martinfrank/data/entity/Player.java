@@ -13,6 +13,12 @@ public class Player extends AbstractEntity {
     @NotEmpty
     private String displayName = "";
 
+    private Long currentLife;
+    private Long maxLife;
+
+    private Long currentEndurance;
+    private Long maxEndurance;
+
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -61,4 +67,35 @@ public class Player extends AbstractEntity {
         this.questItems = questItems;
     }
 
+    public Long getCurrentLife() {
+        return currentLife;
+    }
+
+    public void setCurrentLife(Long currentLife) {
+        this.currentLife = currentLife;
+    }
+
+    public Long getMaxLife() {
+        return maxLife;
+    }
+
+    public void setMaxLife(Long maxLife) {
+        this.maxLife = maxLife;
+    }
+
+    public Long getCurrentEndurance() {
+        return currentEndurance;
+    }
+
+    public void setCurrentEndurance(Long currentEndurance) {
+        this.currentEndurance = currentEndurance;
+    }
+
+    public Long getMaxEndurance() {
+        return maxEndurance;
+    }
+
+    public void setMaxEndurance(Long maxEndurance) {
+        this.maxEndurance = maxEndurance;
+    }
 }

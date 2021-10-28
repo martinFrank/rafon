@@ -12,20 +12,20 @@ dockerize it
 https://vaadin.com/learn/tutorials/docker-container
 mvn install -Pproduction
 java -jar target/rafon-1.0-SNAPSHOT.jar
-docker build -t vaadin-docker .
+docker build -t rafon-docker .
 
 dockerfile:
 FROM openjdk:11
 WORKDIR /
-ADD target/rafon-1.0-SNAPSHOT.jar app.jar
+ADD target/rafon-1.0-SNAPSHOT.jar rafon.jar
 RUN useradd -m myuser
 USER myuser
 EXPOSE 8090
-CMD java -jar -Dspring.profiles.active=prod app.jar
+CMD java -jar -Dspring.profiles.active=prod rafon.jar
 
 
 run docker image
-docker run -ti -p 8090:8080 vaadin-docker
+docker run -ti -p 8080:8080 rafon-docker
 
 upgrage portainer:
 docker pull portainer/portainer
