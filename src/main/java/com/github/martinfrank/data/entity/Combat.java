@@ -18,7 +18,6 @@ public class Combat extends AbstractEntity {
     @JoinColumn(name = "opponent_id")
     private Opponent opponent;
 
-
     private double opponentLife;
 
     public Opponent getOpponent() {

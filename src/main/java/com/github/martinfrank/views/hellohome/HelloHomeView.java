@@ -9,7 +9,6 @@ import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
 import com.github.martinfrank.views.helloworld.HelloWorldView;
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
@@ -41,12 +40,12 @@ public class HelloHomeView extends HorizontalLayout {
         setMargin(true);
         homeText = new TextField("You are home again");
         homeText.setValue(currentPlayer.getDisplayName());
+        homeText.setReadOnly(true);
         add(homeText);
 
         if(currentPlayer.getCombat() != null){
-            Notification.show("you are in a combat - you cannot go home - you are being redirected back to the battle");
+//            Notification.show("you are in a combat - you cannot go home - you are being redirected back to the battle");
             UI.getCurrent().navigate(HelloWorldView.WORLD_MAP_AREA_NAME);
-            return;
         }
     }
 
