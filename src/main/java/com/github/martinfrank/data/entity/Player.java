@@ -13,11 +13,11 @@ public class Player extends AbstractEntity {
     @NotEmpty
     private String displayName = "";
 
-    private Long currentLife;
-    private Long maxLife;
+    private double currentLife;
+    private double maxLife;
 
-    private Long currentEndurance;
-    private Long maxEndurance;
+    private double currentEndurance;
+    private double maxEndurance;
 
     @OneToOne
     @JoinColumn(name = "combat_id", nullable = true)
@@ -76,7 +76,7 @@ public class Player extends AbstractEntity {
         this.questItems = questItems;
     }
 
-    public Long getCurrentLife() {
+    public double getCurrentLife() {
         return currentLife;
     }
 
@@ -84,7 +84,7 @@ public class Player extends AbstractEntity {
         this.currentLife = currentLife;
     }
 
-    public Long getMaxLife() {
+    public double getMaxLife() {
         return maxLife;
     }
 
@@ -92,7 +92,7 @@ public class Player extends AbstractEntity {
         this.maxLife = maxLife;
     }
 
-    public Long getCurrentEndurance() {
+    public double getCurrentEndurance() {
         return currentEndurance;
     }
 
@@ -100,7 +100,7 @@ public class Player extends AbstractEntity {
         this.currentEndurance = currentEndurance;
     }
 
-    public Long getMaxEndurance() {
+    public double getMaxEndurance() {
         return maxEndurance;
     }
 

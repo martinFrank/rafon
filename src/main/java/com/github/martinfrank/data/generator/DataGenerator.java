@@ -149,7 +149,7 @@ public class DataGenerator {
 
             Opponent shadyGuy = new Opponent();
             shadyGuy.setName("shady guy");
-            shadyGuy.setMaxLife(20L);
+            shadyGuy.setMaxLife(20);
             repositoryService.getOpponentRepository().save(shadyGuy);
 
             logger.info("Generated demo data");

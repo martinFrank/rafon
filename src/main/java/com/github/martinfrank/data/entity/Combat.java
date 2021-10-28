@@ -35,4 +35,12 @@ public class Combat extends AbstractEntity {
     public void setOpponentLife(double opponentLife) {
         this.opponentLife = opponentLife;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
 }

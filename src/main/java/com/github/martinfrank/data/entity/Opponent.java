@@ -12,7 +12,7 @@ public class Opponent extends AbstractEntity {
     @NotEmpty
     private String name;
 
-    private Long maxLife;
+    private double maxLife;
 
     public String getName() {
         return name;
@@ -22,11 +22,11 @@ public class Opponent extends AbstractEntity {
         this.name = name;
     }
 
-    public Long getMaxLife() {
+    public double getMaxLife() {
         return maxLife;
     }
 
-    public void setMaxLife(Long maxLife) {
+    public void setMaxLife(double maxLife) {
         this.maxLife = maxLife;
     }
 }

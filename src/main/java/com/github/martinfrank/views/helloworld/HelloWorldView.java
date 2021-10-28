@@ -73,6 +73,10 @@ public class HelloWorldView extends VerticalLayout {
 
     private void attack() {
         Notification.show("you attacked "+currentPlayer.getCombat().getOpponent().getName());
+        double current = currentPlayer.getCombat().getOpponentLife();
+        current = current - 2d;
+        currentPlayer.getCombat().setOpponentLife(current);
+        service.getCombatRepository().save(currentPlayer.getCombat());
     }
 
     private void displayMapAreas() {
@@ -100,6 +104,7 @@ public class HelloWorldView extends VerticalLayout {
         Combat combat = new Combat();
         Opponent shadyGuy = service.getOpponentRepository().findByName("shady guy");
         combat.setOpponent(shadyGuy);
+        combat.setName("test");
         combat.setOpponentLife(shadyGuy.getMaxLife());
         service.getCombatRepository().save(combat);
         currentPlayer.setCombat(combat);
