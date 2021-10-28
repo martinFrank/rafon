@@ -19,6 +19,11 @@ public class Player extends AbstractEntity {
     private Long currentEndurance;
     private Long maxEndurance;
 
+    @OneToOne
+    @JoinColumn(name = "combat_id", nullable = true)
+    private Combat combat;
+
+
     @NotNull
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
@@ -34,6 +39,10 @@ public class Player extends AbstractEntity {
             joinColumns = @JoinColumn(name = "player_id"),
             inverseJoinColumns = @JoinColumn(name = "quest_item_id"))
     private Set<QuestItem> questItems;
+
+    public Combat getCombat() {
+        return combat;
+    }
 
     public String getDisplayName() {
         return displayName;
@@ -97,5 +106,9 @@ public class Player extends AbstractEntity {
 
     public void setMaxEndurance(Long maxEndurance) {
         this.maxEndurance = maxEndurance;
+    }
+
+    public void setCombat(Combat combat) {
+        this.combat = combat;
     }
 }

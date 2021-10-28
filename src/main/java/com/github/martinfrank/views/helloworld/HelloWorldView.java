@@ -7,6 +7,7 @@ import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
 import com.github.martinfrank.views.hellohome.HelloHomeView;
+import com.vaadin.flow.component.Text;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Hr;
@@ -31,6 +32,8 @@ import java.util.Set;
 @PermitAll
 public class HelloWorldView extends VerticalLayout {
 
+    public static final String WORLD_MAP_AREA_NAME = "world";
+
     private final TextField location;
     private final Player currentPlayer;
     private final RepositoryService service;
@@ -50,6 +53,29 @@ public class HelloWorldView extends VerticalLayout {
         removeAll();
         location.setValue(currentPlayer.getCurrentArea().getName());
         add(location);
+
+        if(currentPlayer.getCombat() != null){
+            displayCombat();
+        }else{
+            displayMapAreas();
+        }
+
+    }
+
+    private void displayCombat() {
+        add(new Text("you are fighting "+currentPlayer.getCombat().getOpponent().getName()));
+
+        //TODO: add buttons for actions
+        Button attackButton = new Button("attack");
+        attackButton.addClickListener(e -> attack());
+        add(attackButton);
+    }
+
+    private void attack() {
+        Notification.show("you attacked "+currentPlayer.getCombat().getOpponent().getName());
+    }
+
+    private void displayMapAreas() {
         Set<MapAreaAction> mapAreaActions = currentPlayer.getCurrentArea().getAreaActions();
         if(!mapAreaActions.isEmpty()){
             add(new Hr());
@@ -71,7 +97,15 @@ public class HelloWorldView extends VerticalLayout {
     }
 
     private void executeAction(MapAreaAction mapAreaAction) {
-               Notification.show("execute action "+mapAreaAction.getName()+": coming soon...");
+        Notification.show("execute action "+mapAreaAction.getName()+": coming soon...");
+        Combat combat = new Combat();
+        Opponent shadyGuy = service.getOpponentRepository().findByName("shady guy");
+        combat.setOpponent(shadyGuy);
+        combat.setOpponentLife(shadyGuy.getMaxLife());
+        service.getCombatRepository().save(combat);
+        currentPlayer.setCombat(combat);
+        service.getPlayerRepository().save(currentPlayer);
+        recreatePage();
 
     }
 
@@ -97,7 +131,7 @@ public class HelloWorldView extends VerticalLayout {
 
     private void travelTo(MapArea mapArea) {
         if (HelloHomeView.HOME_MAP_AREA_NAME.equals(mapArea.getName())) {
-            UI.getCurrent().navigate("home");
+            UI.getCurrent().navigate(HelloHomeView.HOME_MAP_AREA_NAME);
             return;
         }
 
