@@ -41,6 +41,7 @@ public class HelloHomeView extends HorizontalLayout {
         setMargin(true);
         homeText = new TextField("You are home again");
         homeText.setValue(currentPlayer.getDisplayName());
+        add(homeText);
 
         if(currentPlayer.getCombat() != null){
             Notification.show("you are in a combat - you cannot go home - you are being redirected back to the battle");

@@ -97,14 +97,15 @@ public class HelloWorldView extends VerticalLayout {
     }
 
     private void executeAction(MapAreaAction mapAreaAction) {
-        Notification.show("execute action "+mapAreaAction.getName()+": coming soon...");
+//        Notification.show("execute action "+mapAreaAction.getName()+": coming soon...");
         Combat combat = new Combat();
         Opponent shadyGuy = service.getOpponentRepository().findByName("shady guy");
         combat.setOpponent(shadyGuy);
         combat.setOpponentLife(shadyGuy.getMaxLife());
-        service.getCombatRepository().save(combat);
+//        service.getCombatRepository().save(combat);
         currentPlayer.setCombat(combat);
         service.getPlayerRepository().save(currentPlayer);
+        Notification.show("execute action "+mapAreaAction.getName()+": a new combat, you vs. "+shadyGuy.getName());
         recreatePage();
 
     }
