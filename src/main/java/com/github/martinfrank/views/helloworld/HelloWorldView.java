@@ -38,6 +38,7 @@ public class HelloWorldView extends VerticalLayout {
     private final Player currentPlayer;
     private final RepositoryService service;
     private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldView.class);
+    private final Text combatText;
 
     public HelloWorldView(RepositoryService service) {
         this.service = service;
@@ -45,6 +46,7 @@ public class HelloWorldView extends VerticalLayout {
         setMargin(true);
         location = new TextField("Your are here:");
         location.setReadOnly(true);
+        combatText = new Text("");
 
         recreatePage();
     }
@@ -63,7 +65,9 @@ public class HelloWorldView extends VerticalLayout {
     }
 
     private void displayCombat() {
-        add(new Text("you are fighting "+currentPlayer.getCombat().getOpponent().getName()));
+        //FIXME move to method
+        combatText.setText("you are fighting "+currentPlayer.getCombat().getOpponent().getName()+":"+currentPlayer.getCombat().getOpponentLife());
+        add(combatText);
 
         //TODO: add buttons for actions
         Button attackButton = new Button("attack");
@@ -77,6 +81,18 @@ public class HelloWorldView extends VerticalLayout {
         current = current - 2d;
         currentPlayer.getCombat().setOpponentLife(current);
         service.getCombatRepository().save(currentPlayer.getCombat());
+
+        //FIXME move to method
+        combatText.setText("you are fighting "+currentPlayer.getCombat().getOpponent().getName()+":"+currentPlayer.getCombat().getOpponentLife());
+
+        if(currentPlayer.getCombat().getOpponentLife() <= 0){
+            Combat combat = currentPlayer.getCombat();
+            currentPlayer.setCombat(null);
+            service.getPlayerRepository().save(currentPlayer);
+            service.getCombatRepository().delete(combat);
+            Notification.show("victory!!");
+            recreatePage();
+        }
     }
 
     private void displayMapAreas() {

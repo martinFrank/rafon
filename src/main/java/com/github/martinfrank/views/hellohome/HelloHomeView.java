@@ -7,8 +7,6 @@ import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
-import com.github.martinfrank.views.helloworld.HelloWorldView;
-import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -46,7 +44,6 @@ public class HelloHomeView extends HorizontalLayout {
 
         if(currentPlayer.getCombat() != null){
             Notification.show("you are in a battle and cannot go home");
-            UI.getCurrent().navigate(HelloWorldView.WORLD_MAP_AREA_NAME);
         }
     }
 
