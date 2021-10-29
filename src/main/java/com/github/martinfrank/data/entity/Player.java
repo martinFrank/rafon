@@ -40,6 +40,9 @@ public class Player extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "quest_item_id"))
     private Set<QuestItem> questItems;
 
+    @OneToMany(mappedBy = "player")
+    Set<PlayerItem> inventoryItems;
+
     public Combat getCombat() {
         return combat;
     }
@@ -110,5 +113,29 @@ public class Player extends AbstractEntity {
 
     public void setCombat(Combat combat) {
         this.combat = combat;
+    }
+
+    public void setCurrentLife(double currentLife) {
+        this.currentLife = currentLife;
+    }
+
+    public void setMaxLife(double maxLife) {
+        this.maxLife = maxLife;
+    }
+
+    public void setCurrentEndurance(double currentEndurance) {
+        this.currentEndurance = currentEndurance;
+    }
+
+    public void setMaxEndurance(double maxEndurance) {
+        this.maxEndurance = maxEndurance;
+    }
+
+    public Set<PlayerItem> getInventoryItems() {
+        return inventoryItems;
+    }
+
+    public void setInventoryItems(Set<PlayerItem> inventoryItems) {
+        this.inventoryItems = inventoryItems;
     }
 }

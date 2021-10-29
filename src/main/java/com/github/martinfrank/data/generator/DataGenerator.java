@@ -10,6 +10,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,12 +20,18 @@ public class DataGenerator {
 
     private static final String IMG_URL = "https://images.unsplash.com/photo-1607746882042-944635dfe10e?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=128&h=128&q=80";
     private PasswordEncoder passwordEncoder;
+    private RepositoryService repositoryService;
 
-
+    private MapArea world;
+    private MapArea city;
+    private MapArea home;
+    private MapArea meadow;
+    private MapArea shadySideAlley;
 
     @Bean
     public CommandLineRunner loadData(PasswordEncoder passwordEncoder, RepositoryService repositoryService) {
         this.passwordEncoder = passwordEncoder;
+        this.repositoryService = repositoryService;
         return args -> {
             Logger logger = LoggerFactory.getLogger(getClass());
             if (repositoryService.getUserRepository().count() != 0L) {
@@ -36,54 +43,26 @@ public class DataGenerator {
             logger.info("Generating demo data");
             logger.info("... generating area entities...");
 
-            MapArea world = new MapArea();
-            world.setName("world");
+            world = createAndSaveMapArea("world");
+            city = createAndSaveMapArea("city");
+            home = createAndSaveMapArea("home");
+            meadow = createAndSaveMapArea("meadow");
+            shadySideAlley = createAndSaveMapArea("shady side alley");
+
+            world.setSubMapAreas(createMapAreaSet(city, home));
             repositoryService.getMapAreaRepository().save(world);
 
-            MapArea city = new MapArea();
-            city.setName("city");
+            city.setSubMapAreas(createMapAreaSet(world, shadySideAlley, meadow));
             repositoryService.getMapAreaRepository().save(city);
 
-            MapArea home = new MapArea();
-            home.setName("home");
+            home.setSubMapAreas(createMapAreaSet(world));
             repositoryService.getMapAreaRepository().save(home);
 
-            MapArea meadow = new MapArea();
-            meadow.setName("meadow");
+            meadow.setSubMapAreas(createMapAreaSet(city));
             repositoryService.getMapAreaRepository().save(meadow);
 
-            MapArea shadySideAlley = new MapArea();
-            shadySideAlley.setName("shady side alley");
+            shadySideAlley.setSubMapAreas(createMapAreaSet(city));
             repositoryService.getMapAreaRepository().save(shadySideAlley);
-
-            Set<MapArea> worldSubAreas = new HashSet<>();
-            worldSubAreas.add(city);
-            worldSubAreas.add(home);
-            world.setSubMapAreas(worldSubAreas);
-            repositoryService.getMapAreaRepository().save(world);
-
-            Set<MapArea> citySubAreas = new HashSet<>();
-            citySubAreas.add(world);
-            citySubAreas.add(shadySideAlley);
-            citySubAreas.add(meadow);
-            city.setSubMapAreas(citySubAreas);
-            repositoryService.getMapAreaRepository().save(city);
-
-            Set<MapArea> homeSubAreas = new HashSet<>();
-            homeSubAreas.add(world);
-            home.setSubMapAreas(homeSubAreas);
-            repositoryService.getMapAreaRepository().save(home);
-
-            Set<MapArea> meadowSubAreas = new HashSet<>();
-            meadowSubAreas.add(city);
-            meadow.setSubMapAreas(meadowSubAreas);
-            repositoryService.getMapAreaRepository().save(meadow);
-
-            Set<MapArea> shadySideAlleySubAreas = new HashSet<>();
-            shadySideAlleySubAreas.add(city);
-            shadySideAlley.setSubMapAreas(shadySideAlleySubAreas);
-            repositoryService.getMapAreaRepository().save(shadySideAlley);
-
 
             //actions
             MapAreaAction harvestAction = new MapAreaAction();
@@ -95,7 +74,6 @@ public class DataGenerator {
             meadow.setAreaActions(meadowActions);
             repositoryService.getMapAreaRepository().save(meadow);
 
-
             MapAreaAction lookingForTroubleAction = new MapAreaAction();
             lookingForTroubleAction.setName("looking for trouble");
             repositoryService.getMapAreaActionRepository().save(lookingForTroubleAction);
@@ -105,22 +83,16 @@ public class DataGenerator {
             shadySideAlley.setAreaActions(sideAlleyActions);
             repositoryService.getMapAreaRepository().save(shadySideAlley);
 
-
-
             logger.info("... generating 2 User entities...");
             //my user
             User martinUser = createUser("martin","martin","martin",IMG_URL, Role.USER);
             Player martinPlayer = createPlayer("[M@rtin]", martinUser, 20L, 20L);
-            martinPlayer.setCurrentArea(world);
-
             repositoryService.getPlayerRepository().save(martinPlayer);
             repositoryService.getUserRepository().save(martinUser);
 
             //another user
             User mrxUser = createUser("mrx",  "mrx", "mrx",IMG_URL, Role.USER);
             Player mrxPlayer = createPlayer("Mr. X", mrxUser, 20L, 20L);
-            mrxPlayer.setCurrentArea(world);
-
             repositoryService.getPlayerRepository().save(mrxPlayer);
             repositoryService.getUserRepository().save(mrxUser);
 
@@ -129,11 +101,7 @@ public class DataGenerator {
             //quest items
             QuestItem mapOfTheArea = new QuestItem();
             mapOfTheArea.setName("map of the world");
-            Set<MapArea> areas = new HashSet<>();
-            areas.add(world);
-            areas.add(city);
-            areas.add(shadySideAlley);
-            areas.add(home);
+            Set<MapArea> areas = createMapAreaSet(world, city, shadySideAlley, home);
             mapOfTheArea.setGrantedAccess(areas);
             repositoryService.getQuestItemRepository().save(mapOfTheArea);
 
@@ -152,8 +120,25 @@ public class DataGenerator {
             shadyGuy.setMaxLife(20);
             repositoryService.getOpponentRepository().save(shadyGuy);
 
+            Item butterflyKnife = new Item();
+            butterflyKnife.setName("butterfly knife");
+            repositoryService.getItemRepository().save(butterflyKnife);
+
             logger.info("Generated demo data");
         };
+    }
+
+    private Set<MapArea> createMapAreaSet(MapArea... areas) {
+        Set<MapArea> subAreas = new HashSet<>();
+        subAreas.addAll(Arrays.asList(areas));
+        return subAreas;
+    }
+
+    private MapArea createAndSaveMapArea(String name) {
+        MapArea area = new MapArea();
+        area.setName(name);
+        repositoryService.getMapAreaRepository().save(area);
+        return area;
     }
 
     private Player createPlayer(String displayName, User user, long life, long endurance) {
@@ -164,6 +149,7 @@ public class DataGenerator {
         player.setMaxLife(life);
         player.setMaxEndurance(endurance);
         player.setCurrentEndurance(endurance);
+        player.setCurrentArea(world);
         return player;
     }
 

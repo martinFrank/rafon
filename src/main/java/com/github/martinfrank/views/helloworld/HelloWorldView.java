@@ -91,6 +91,12 @@ public class HelloWorldView extends VerticalLayout {
             service.getPlayerRepository().save(currentPlayer);
             service.getCombatRepository().delete(combat);
             Notification.show("victory!!");
+            Item butterflyKnife = service.getItemRepository().findByName("butterfly knife");
+            PlayerItem playerItem = new PlayerItem();
+            playerItem.setItem(butterflyKnife);
+            playerItem.setPlayer(currentPlayer);
+            service.getPlayerItemRepository().save(playerItem);
+
             recreatePage();
         }
     }

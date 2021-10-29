@@ -6,13 +6,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class RepositoryService {
 
-    private PlayerRepository playerRepository;
-    private MapAreaRepository mapAreaRepository;
-    private UserRepository userRepository;
-    private QuestItemRepository questItemRepository;
-    private MapAreaActionRepository mapAreaActionRepository;
-    private CombatRepository combatRepository;
-    private OpponentRepository opponentRepository;
+    private final PlayerRepository playerRepository;
+    private final MapAreaRepository mapAreaRepository;
+    private final UserRepository userRepository;
+    private final QuestItemRepository questItemRepository;
+    private final MapAreaActionRepository mapAreaActionRepository;
+    private final CombatRepository combatRepository;
+    private final OpponentRepository opponentRepository;
+    private final ItemRepository itemRepository;
+    private final PlayerItemRepository playerItemRepository;
 
     public RepositoryService(
             @Autowired PlayerRepository playerRepository,
@@ -21,7 +23,9 @@ public class RepositoryService {
             @Autowired QuestItemRepository questItemRepository,
             @Autowired MapAreaActionRepository mapAreaActionRepository,
             @Autowired CombatRepository combatRepository,
-            @Autowired OpponentRepository opponentRepository) {
+            @Autowired OpponentRepository opponentRepository,
+            @Autowired ItemRepository itemRepository,
+            @Autowired PlayerItemRepository playerItemRepository) {
         this.playerRepository = playerRepository;
         this.mapAreaRepository = mapAreaRepository;
         this.userRepository = userRepository;
@@ -29,61 +33,43 @@ public class RepositoryService {
         this.mapAreaActionRepository = mapAreaActionRepository;
         this.combatRepository = combatRepository;
         this.opponentRepository = opponentRepository;
+        this.itemRepository = itemRepository;
+        this.playerItemRepository = playerItemRepository;
     }
 
     public PlayerRepository getPlayerRepository() {
         return playerRepository;
     }
 
-    public void setPlayerRepository(PlayerRepository playerRepository) {
-        this.playerRepository = playerRepository;
-    }
-
     public MapAreaRepository getMapAreaRepository() {
         return mapAreaRepository;
-    }
-
-    public void setMapAreaRepository(MapAreaRepository mapAreaRepository) {
-        this.mapAreaRepository = mapAreaRepository;
     }
 
     public UserRepository getUserRepository() {
         return userRepository;
     }
 
-    public void setUserRepository(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     public QuestItemRepository getQuestItemRepository() {
         return questItemRepository;
-    }
-
-    public void setQuestItemRepository(QuestItemRepository questItemRepository) {
-        this.questItemRepository = questItemRepository;
     }
 
     public MapAreaActionRepository getMapAreaActionRepository() {
         return mapAreaActionRepository;
     }
 
-    public void setMapAreaActionRepository(MapAreaActionRepository mapAreaActionRepository) {
-        this.mapAreaActionRepository = mapAreaActionRepository;
-    }
-
     public CombatRepository getCombatRepository() {
         return combatRepository;
-    }
-
-    public void setCombatRepository(CombatRepository combatRepository) {
-        this.combatRepository = combatRepository;
     }
 
     public OpponentRepository getOpponentRepository() {
         return opponentRepository;
     }
 
-    public void setOpponentRepository(OpponentRepository opponentRepository) {
-        this.opponentRepository = opponentRepository;
+    public ItemRepository getItemRepository() {
+        return itemRepository;
+    }
+
+    public PlayerItemRepository getPlayerItemRepository() {
+        return playerItemRepository;
     }
 }
