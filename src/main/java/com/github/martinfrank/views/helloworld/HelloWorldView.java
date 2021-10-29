@@ -95,7 +95,7 @@ public class HelloWorldView extends VerticalLayout {
             PlayerItem playerItem = new PlayerItem();
             playerItem.setItem(butterflyKnife);
             playerItem.setPlayer(currentPlayer);
-            service.getPlayerItemRepository().save(playerItem);
+//            service.getPlayerItemRepository().save(playerItem);
             Set<PlayerItem> playerItems = currentPlayer.getPlayerItems();
             if (playerItems == null){
                 playerItems = new HashSet<>();
