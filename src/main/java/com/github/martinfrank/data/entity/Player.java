@@ -39,7 +39,7 @@ public class Player extends AbstractEntity {
             inverseJoinColumns = @JoinColumn(name = "quest_item_id"))
     private Set<QuestItem> questItems;
 
-    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "player")
     private Set<PlayerItem> playerItems;
 
     public Combat getCombat() {

@@ -14,7 +14,7 @@ public class Item extends AbstractEntity {
     private String name = "";
 
     @OneToMany(mappedBy = "item")
-    Set<PlayerItem> inventory;
+    Set<PlayerItem> playerItems;
 
     public String getName() {
         return name;
@@ -24,11 +24,11 @@ public class Item extends AbstractEntity {
         this.name = name;
     }
 
-    public Set<PlayerItem> getInventory() {
-        return inventory;
+    public Set<PlayerItem> getPlayerItems() {
+        return playerItems;
     }
 
-    public void setInventory(Set<PlayerItem> inventory) {
-        this.inventory = inventory;
+    public void setPlayerItems(Set<PlayerItem> playerItems) {
+        this.playerItems = playerItems;
     }
 }

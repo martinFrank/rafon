@@ -2,18 +2,23 @@ package com.github.martinfrank.data.entity;
 
 import com.github.martinfrank.data.AbstractEntity;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
-public class PlayerItem extends AbstractEntity {
+public class PlayerItem extends AbstractEntity{
+
+//    @Id
+//    @GeneratedValue (strategy = GenerationType.AUTO)
+//    @Nonnull
+//    private Integer id;
 
     @ManyToOne
-    @MapsId("playerId")
     @JoinColumn(name = "player_id")
     private Player player;
 
-    @ManyToOne (cascade = CascadeType.MERGE)
-    @MapsId("itemId")
+    @ManyToOne
     @JoinColumn(name = "item_id")
     private Item item;
 
