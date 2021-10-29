@@ -9,15 +9,13 @@ import java.util.Objects;
 @Embeddable
 public class PlayerItemKey implements Serializable {
 
+    private static final long serialVersionUID = 1234L;
+
     @Column(name = "player_id")
     public Integer playerId;
 
     @Column(name = "item_id")
     public Integer itemId;
-
-    public PlayerItemKey(){
-
-    }
 
     public Integer getPlayerId() {
         return playerId;

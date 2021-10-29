@@ -3,9 +3,12 @@ package com.github.martinfrank.data.entity;
 import com.github.martinfrank.data.AbstractEntity;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
-public class PlayerItem extends AbstractEntity {
+public class PlayerItem extends AbstractEntity implements Serializable {
+
+    private static final long serialVersionUID = 1234L;
 
     @EmbeddedId
     PlayerItemKey playerItemKey;
