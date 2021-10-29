@@ -40,7 +40,7 @@ public class Player extends AbstractEntity {
     private Set<QuestItem> questItems;
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    Set<PlayerItem> playerItems;
+    private Set<PlayerItem> playerItems;
 
     public Combat getCombat() {
         return combat;
