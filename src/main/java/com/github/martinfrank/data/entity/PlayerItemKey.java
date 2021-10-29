@@ -9,10 +9,10 @@ import java.io.Serializable;
 public class PlayerItemKey implements Serializable {
 
     @Column(name = "player_id")
-    private Long playerId;
+    public Long playerId;
 
     @Column(name = "item_id")
-    private Long itemId;
+    public Long itemId;
 
     public Long getPlayerId() {
         return playerId;
@@ -29,7 +29,4 @@ public class PlayerItemKey implements Serializable {
     public void setItemId(Long itemId) {
         this.itemId = itemId;
     }
-
-    // standard constructors, getters, and setters
-    // hashcode and equals implementation
 }
