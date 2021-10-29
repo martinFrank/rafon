@@ -26,13 +26,12 @@ public class HelloMeView extends VerticalLayout {
 
 //    private final TextField inventoryText;
 
-    private final RepositoryService service;
-    private final Player currentPlayer;
+//    private final RepositoryService service;
+//    private final Player currentPlayer;
 
     public HelloMeView(RepositoryService service) {
-        this.service = service;
-        currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
-        service.getPlayerRepository().save(currentPlayer);
+//        this.service = service;
+        Player currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
 
         setMargin(true);
         TextField inventoryText = new TextField("my inventory");
