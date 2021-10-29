@@ -1,16 +1,17 @@
 package com.github.martinfrank.data.entity;
 
-import com.vaadin.fusion.Nonnull;
-
 import javax.persistence.*;
 
 @Entity
 public class PlayerItem {
 
+//    @EmbeddedId
+//    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @Nonnull
+//    private Integer id;
+
     @EmbeddedId
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Nonnull
-    private Integer id;
+    PlayerItemKey id;
 
     @ManyToOne
     @MapsId("playerId")
