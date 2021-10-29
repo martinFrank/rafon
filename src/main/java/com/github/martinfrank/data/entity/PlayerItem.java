@@ -2,16 +2,13 @@ package com.github.martinfrank.data.entity;
 
 import com.github.martinfrank.data.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 
 @Entity
 public class PlayerItem extends AbstractEntity {
 
-//    @EmbeddedId
-//    PlayerItemKey id;
+    @EmbeddedId
+    PlayerItemKey playerItemKey;
 
     @ManyToOne
     @MapsId("playerId")
@@ -49,11 +46,11 @@ public class PlayerItem extends AbstractEntity {
         this.slot = slot;
     }
 
-//    public PlayerItemKey getId() {
-//        return id;
-//    }
-//
-//    public void setId(PlayerItemKey id) {
-//        this.id = id;
-//    }
+    public PlayerItemKey getPlayerItemKey() {
+        return playerItemKey;
+    }
+
+    public void setPlayerItemKey(PlayerItemKey playerItemKey) {
+        this.playerItemKey = playerItemKey;
+    }
 }
