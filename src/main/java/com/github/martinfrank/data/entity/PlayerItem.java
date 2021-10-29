@@ -5,11 +5,6 @@ import javax.persistence.*;
 @Entity
 public class PlayerItem {
 
-//    @EmbeddedId
-//    @GeneratedValue(strategy = GenerationType.AUTO)
-//    @Nonnull
-//    private Integer id;
-
     @EmbeddedId
     PlayerItemKey id;
 
