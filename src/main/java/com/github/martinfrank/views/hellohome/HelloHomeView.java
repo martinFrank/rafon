@@ -43,7 +43,7 @@ public class HelloHomeView extends HorizontalLayout {
         add(homeText);
 
         if(currentPlayer.getCombat() != null){
-            Notification.show("you are in a battle and cannot go home");
+            Notification.show("you are in a battle and cannot change outfit");
         }
     }
 

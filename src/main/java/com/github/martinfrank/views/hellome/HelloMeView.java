@@ -7,7 +7,7 @@ import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
-import com.vaadin.flow.component.Text;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.Hr;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -24,13 +24,8 @@ import javax.annotation.security.PermitAll;
 @PermitAll
 public class HelloMeView extends VerticalLayout {
 
-//    private final TextField inventoryText;
-
-//    private final RepositoryService service;
-//    private final Player currentPlayer;
 
     public HelloMeView(RepositoryService service) {
-//        this.service = service;
         Player currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
 
         setMargin(true);
@@ -42,7 +37,7 @@ public class HelloMeView extends VerticalLayout {
         if(!currentPlayer.getPlayerItems().isEmpty()){
             add(new Hr());
             for(PlayerItem playerItem: currentPlayer.getPlayerItems()){
-                add(new Text(playerItem.getItem().getName()));
+                add(new Button(playerItem.getItem().getName()));
             }
         }
 

@@ -107,19 +107,6 @@ public class HelloWorldView extends VerticalLayout {
             service.getPlayerItemRepository().save(playerItem);
             service.getPlayerRepository().save(currentPlayer);
 
-//
-//            Item butterflyKnife = service.getItemRepository().findByName("butterfly knife");
-//            PlayerItem playerItem = new PlayerItem();
-//            playerItem.setItem(butterflyKnife);
-//            playerItem.setPlayer(currentPlayer);
-//            service.getPlayerItemRepository().save(playerItem);
-//            Set<PlayerItem> playerItems = currentPlayer.getPlayerItems();
-//            if (playerItems == null){
-//                playerItems = new HashSet<>();
-//                currentPlayer.setPlayerItems(playerItems);
-//            }
-//            playerItems.add(playerItem);
-//            service.getPlayerRepository().save(currentPlayer);
             recreatePage();
         }
     }
