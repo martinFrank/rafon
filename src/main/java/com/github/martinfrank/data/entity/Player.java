@@ -20,7 +20,7 @@ public class Player extends AbstractEntity {
     private double maxEndurance;
 
     @OneToOne
-    @JoinColumn(name = "combat_id", nullable = true)
+    @JoinColumn(name = "combat_id")
     private Combat combat;
 
     @NotNull
