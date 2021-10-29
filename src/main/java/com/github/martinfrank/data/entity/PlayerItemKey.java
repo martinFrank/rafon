@@ -9,24 +9,24 @@ import java.io.Serializable;
 public class PlayerItemKey implements Serializable {
 
     @Column(name = "player_id")
-    public Long playerId;
+    public Integer playerId;
 
     @Column(name = "item_id")
-    public Long itemId;
+    public Integer itemId;
 
-    public Long getPlayerId() {
+    public Integer getPlayerId() {
         return playerId;
     }
 
-    public void setPlayerId(Long playerId) {
+    public void setPlayerId(Integer playerId) {
         this.playerId = playerId;
     }
 
-    public Long getItemId() {
+    public Integer getItemId() {
         return itemId;
     }
 
-    public void setItemId(Long itemId) {
+    public void setItemId(Integer itemId) {
         this.itemId = itemId;
     }
 }
