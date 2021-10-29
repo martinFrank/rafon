@@ -124,7 +124,7 @@ public class DataGenerator {
             butterflyKnife.setName("butterfly knife");
             repositoryService.getItemRepository().save(butterflyKnife);
 
-             PlayerItem playerItem = new PlayerItem();
+            PlayerItem playerItem = new PlayerItem();
             playerItem.setItem(butterflyKnife);
             playerItem.setPlayer(martinPlayer);
             Set<PlayerItem> playerItems = martinPlayer.getPlayerItems();
