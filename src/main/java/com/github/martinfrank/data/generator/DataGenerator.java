@@ -133,7 +133,7 @@ public class DataGenerator {
                 martinPlayer.setPlayerItems(playerItems);
             }
             playerItems.add(playerItem);
-//            repositoryService.getPlayerItemRepository().save(playerItem);
+            repositoryService.getPlayerItemRepository().save(playerItem);
             repositoryService.getPlayerRepository().save(martinPlayer);
 
             logger.info("Generated demo data");
