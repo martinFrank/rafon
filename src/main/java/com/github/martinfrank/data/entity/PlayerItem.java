@@ -11,14 +11,14 @@ public class PlayerItem {
     @ManyToOne
     @MapsId("playerId")
     @JoinColumn(name = "player_id")
-    Player player;
+    private Player player;
 
     @ManyToOne
     @MapsId("itemId")
     @JoinColumn(name = "item_id")
-    Item item;
+    private Item item;
 
-    String slot;
+    private String slot;
 
     public Player getPlayer() {
         return player;
@@ -42,5 +42,13 @@ public class PlayerItem {
 
     public void setSlot(String slot) {
         this.slot = slot;
+    }
+
+    public PlayerItemKey getId() {
+        return id;
+    }
+
+    public void setId(PlayerItemKey id) {
+        this.id = id;
     }
 }
