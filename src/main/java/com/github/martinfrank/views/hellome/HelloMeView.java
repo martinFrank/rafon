@@ -29,12 +29,12 @@ public class HelloMeView extends VerticalLayout {
 
     public static final String HOME_MAP_AREA_NAME = "character";
 
-//    private final RepositoryService service;
-//    private final Player currentPlayer;
+    private final RepositoryService service;
+    private final Player currentPlayer;
 
     public HelloMeView(RepositoryService service) {
-//        this.service = service;
-        Player currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
+        this.service = service;
+        currentPlayer = getCurrentPlayer(service.getUserRepository(), service.getPlayerRepository());
         MapArea homeMapArea = service.getMapAreaRepository().findByName(HOME_MAP_AREA_NAME);
         currentPlayer.setCurrentArea(homeMapArea);
         service.getPlayerRepository().save(currentPlayer);
@@ -45,9 +45,9 @@ public class HelloMeView extends VerticalLayout {
         inventoryText.setReadOnly(true);
         add(inventoryText);
 
-        if(!currentPlayer.getInventoryItems().isEmpty()){
+        if(!currentPlayer.getPlayerItems().isEmpty()){
             add(new Hr());
-            for(PlayerItem playerItem: currentPlayer.getInventoryItems()){
+            for(PlayerItem playerItem: currentPlayer.getPlayerItems()){
                 add(new Text(playerItem.getItem().getName()));
             }
         }
