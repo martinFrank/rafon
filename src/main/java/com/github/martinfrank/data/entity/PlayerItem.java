@@ -1,17 +1,15 @@
 package com.github.martinfrank.data.entity;
 
-import com.github.martinfrank.data.AbstractEntity;
-
 import javax.persistence.*;
 import java.io.Serializable;
 
 @Entity
-public class PlayerItem extends AbstractEntity implements Serializable {
+public class PlayerItem implements Serializable {
 
     private static final long serialVersionUID = 1234L;
 
     @EmbeddedId
-    PlayerItemKey playerItemKey;
+    PlayerItemKey id;
 
     @ManyToOne
     @MapsId("playerId")
@@ -49,11 +47,11 @@ public class PlayerItem extends AbstractEntity implements Serializable {
         this.slot = slot;
     }
 
-    public PlayerItemKey getPlayerItemKey() {
-        return playerItemKey;
+    public PlayerItemKey getId() {
+        return id;
     }
 
-    public void setPlayerItemKey(PlayerItemKey playerItemKey) {
-        this.playerItemKey = playerItemKey;
+    public void setId(PlayerItemKey id) {
+        this.id = id;
     }
 }
