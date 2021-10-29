@@ -127,13 +127,13 @@ public class DataGenerator {
              PlayerItem playerItem = new PlayerItem();
             playerItem.setItem(butterflyKnife);
             playerItem.setPlayer(martinPlayer);
-            repositoryService.getPlayerItemRepository().save(playerItem);
             Set<PlayerItem> playerItems = martinPlayer.getPlayerItems();
             if (playerItems == null){
                 playerItems = new HashSet<>();
                 martinPlayer.setPlayerItems(playerItems);
             }
             playerItems.add(playerItem);
+//            repositoryService.getPlayerItemRepository().save(playerItem);
             repositoryService.getPlayerRepository().save(martinPlayer);
 
             logger.info("Generated demo data");
