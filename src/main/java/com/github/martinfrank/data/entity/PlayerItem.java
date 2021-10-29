@@ -2,10 +2,7 @@ package com.github.martinfrank.data.entity;
 
 import com.github.martinfrank.data.AbstractEntity;
 
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
+import javax.persistence.*;
 
 @Entity
 public class PlayerItem extends AbstractEntity {
@@ -15,7 +12,7 @@ public class PlayerItem extends AbstractEntity {
     @JoinColumn(name = "player_id")
     private Player player;
 
-    @ManyToOne
+    @ManyToOne (cascade = CascadeType.MERGE)
     @MapsId("itemId")
     @JoinColumn(name = "item_id")
     private Item item;
