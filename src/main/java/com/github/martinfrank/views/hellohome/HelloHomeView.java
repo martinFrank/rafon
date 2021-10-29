@@ -8,7 +8,7 @@ import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
 import com.github.martinfrank.views.MainLayout;
 import com.vaadin.flow.component.notification.Notification;
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -20,7 +20,7 @@ import javax.annotation.security.PermitAll;
 @PageTitle("Hello Home")
 @Route(value = "home", layout = MainLayout.class)
 @PermitAll
-public class HelloHomeView extends HorizontalLayout {
+public class HelloHomeView extends VerticalLayout {
 
     private TextField homeText;
 
