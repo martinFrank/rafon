@@ -9,7 +9,7 @@ public class PlayerItem implements Serializable {
     private static final long serialVersionUID = 1234L;
 
     @EmbeddedId
-    PlayerItemKey id;
+    public PlayerItemKey id = new PlayerItemKey();
 
     @ManyToOne
     @MapsId("playerId")
