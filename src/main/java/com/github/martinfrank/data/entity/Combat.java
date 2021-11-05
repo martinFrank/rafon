@@ -13,6 +13,10 @@ public class Combat extends AbstractEntity {
     @NotNull
     private String name;
 
+    private int round;
+
+    private long seed;
+
     @NotNull
     @OneToOne
     @JoinColumn(name = "opponent_id")
@@ -42,5 +46,21 @@ public class Combat extends AbstractEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getRound() {
+        return round;
+    }
+
+    public void setRound(int round) {
+        this.round = round;
+    }
+
+    public long getSeed() {
+        return seed;
+    }
+
+    public void setSeed(long seed) {
+        this.seed = seed;
     }
 }

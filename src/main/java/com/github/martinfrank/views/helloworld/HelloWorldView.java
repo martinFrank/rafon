@@ -5,6 +5,8 @@ import com.github.martinfrank.data.entity.*;
 import com.github.martinfrank.data.service.PlayerRepository;
 import com.github.martinfrank.data.service.RepositoryService;
 import com.github.martinfrank.data.service.UserRepository;
+import com.github.martinfrank.logic.CombatHandler;
+import com.github.martinfrank.logic.RoundResult;
 import com.github.martinfrank.views.MainLayout;
 import com.github.martinfrank.views.hellohome.HelloHomeView;
 import com.vaadin.flow.component.Text;
@@ -39,6 +41,7 @@ public class HelloWorldView extends VerticalLayout {
     private final RepositoryService service;
     private static final Logger LOGGER = LoggerFactory.getLogger(HelloWorldView.class);
     private final Text combatText;
+    private CombatHandler combatHandler = new CombatHandler();
 
     public HelloWorldView(RepositoryService service) {
         this.service = service;
@@ -71,44 +74,35 @@ public class HelloWorldView extends VerticalLayout {
 
         //TODO: add buttons for actions
         Button attackButton = new Button("attack");
-        attackButton.addClickListener(e -> attack());
+        attackButton.addClickListener(e -> startRound());
         add(attackButton);
     }
 
-    private void attack() {
-        Notification.show("you attacked "+currentPlayer.getCombat().getOpponent().getName());
-        double current = currentPlayer.getCombat().getOpponentLife();
-        current = current - 2d;
-        currentPlayer.getCombat().setOpponentLife(current);
-        service.getCombatRepository().save(currentPlayer.getCombat());
+    private void startRound() {
+        RoundResult result = combatHandler.handleRound(currentPlayer, service);
+//        StringBuilder sb = new StringBuilder();
+//        for(String message: result.getMessages()){
+//            sb.append(message+"\n");
+//        }
+//        add(new Text(sb.toString()));
 
-        //FIXME move to method
-        combatText.setText("you are fighting "+currentPlayer.getCombat().getOpponent().getName()+":"+currentPlayer.getCombat().getOpponentLife());
-
-        if(currentPlayer.getCombat().getOpponentLife() <= 0){
-            Combat combat = currentPlayer.getCombat();
-            currentPlayer.setCombat(null);
-            service.getPlayerRepository().save(currentPlayer);
-            service.getCombatRepository().delete(combat);
-            Notification.show("victory!!");
-
-
-            //from here
-            Item butterflyKnife = service.getItemRepository().findByName("butterfly knife");
-            PlayerItem playerItem = new PlayerItem();
-            playerItem.setItem(butterflyKnife);
-            playerItem.setPlayer(currentPlayer);
-            Set<PlayerItem> playerItems = currentPlayer.getPlayerItems();
-            if (playerItems == null){
-                playerItems = new HashSet<>();
-                currentPlayer.setPlayerItems(playerItems);
-            }
-            playerItems.add(playerItem);
-            service.getPlayerItemRepository().save(playerItem);
-            service.getPlayerRepository().save(currentPlayer);
-
+//        if(result.isVictory()){
+//            Item butterflyKnife = service.getItemRepository().findByName("butterfly knife");
+//            PlayerItem playerItem = new PlayerItem();
+//            playerItem.setItem(butterflyKnife);
+//            playerItem.setPlayer(currentPlayer);
+//            Set<PlayerItem> playerItems = currentPlayer.getPlayerItems();
+//            if (playerItems == null) {
+//                playerItems = new HashSet<>();
+//                currentPlayer.setPlayerItems(playerItems);
+//            }
+//            playerItems.add(playerItem);
+//            service.getPlayerItemRepository().save(playerItem);
+//            service.getPlayerRepository().save(currentPlayer);
+//        }
+//        if(result.isVictory()){
             recreatePage();
-        }
+//        }
     }
 
     private void displayMapAreas() {

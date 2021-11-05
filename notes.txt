@@ -5,6 +5,9 @@ https://www.baeldung.com/jpa-many-to-many
 https://www.baeldung.com/hibernate-one-to-many
 
 
+https://vaadin.com/docs/latest/flow/advanced/loading-resources#resource-cheat-sheet
+
+
 https://spring.io/guides/gs/spring-boot/
 sudo bash ./mvnw spring-boot:run
 

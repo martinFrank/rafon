@@ -118,10 +118,19 @@ public class DataGenerator {
             Opponent shadyGuy = new Opponent();
             shadyGuy.setName("shady guy");
             shadyGuy.setMaxLife(20);
+            shadyGuy.setAttack("1D6+1");
+            shadyGuy.setDamage("1D6");
+            shadyGuy.setArmor("0D1+1");
+            shadyGuy.setDefense("1D4");
             repositoryService.getOpponentRepository().save(shadyGuy);
 
             Item butterflyKnife = new Item();
             butterflyKnife.setName("butterfly knife");
+            butterflyKnife.setAttack("1D6+1");
+            butterflyKnife.setDamage("1D6+2");
+            butterflyKnife.setArmor("0D1+1");
+            butterflyKnife.setDefense("1D4+1");
+            butterflyKnife.setSlot("SECONDARY");
             repositoryService.getItemRepository().save(butterflyKnife);
 
             PlayerItem playerItem = new PlayerItem();
@@ -161,6 +170,9 @@ public class DataGenerator {
         player.setMaxLife(life);
         player.setMaxEndurance(endurance);
         player.setCurrentEndurance(endurance);
+        player.setDexterity(6d);
+        player.setIntelligence(5d);
+        player.setStrength(6d);
         player.setCurrentArea(world);
         return player;
     }

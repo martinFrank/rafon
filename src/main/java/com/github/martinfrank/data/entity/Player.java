@@ -5,6 +5,7 @@ import com.github.martinfrank.data.AbstractEntity;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -37,10 +38,17 @@ public class Player extends AbstractEntity {
             name = "player_quest_item",
             joinColumns = @JoinColumn(name = "player_id"),
             inverseJoinColumns = @JoinColumn(name = "quest_item_id"))
-    private Set<QuestItem> questItems;
+    private Set<QuestItem> questItems = new HashSet<>();;
 
     @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
-    private Set<PlayerItem> playerItems;
+    private Set<PlayerItem> playerItems = new HashSet<>();
+
+    @OneToMany(mappedBy = "player", fetch = FetchType.EAGER)
+    private Set<PlayerEffect> playerEffect = new HashSet<>();
+
+    private double intelligence;
+    private double dexterity;
+    private double strength;
 
     public Combat getCombat() {
         return combat;
@@ -82,32 +90,18 @@ public class Player extends AbstractEntity {
         return currentLife;
     }
 
-    public void setCurrentLife(Long currentLife) {
-        this.currentLife = currentLife;
-    }
 
     public double getMaxLife() {
         return maxLife;
     }
 
-    public void setMaxLife(Long maxLife) {
-        this.maxLife = maxLife;
-    }
 
     public double getCurrentEndurance() {
         return currentEndurance;
     }
 
-    public void setCurrentEndurance(Long currentEndurance) {
-        this.currentEndurance = currentEndurance;
-    }
-
     public double getMaxEndurance() {
         return maxEndurance;
-    }
-
-    public void setMaxEndurance(Long maxEndurance) {
-        this.maxEndurance = maxEndurance;
     }
 
     public void setCombat(Combat combat) {
@@ -136,5 +130,37 @@ public class Player extends AbstractEntity {
 
     public void setPlayerItems(Set<PlayerItem> playerItems) {
         this.playerItems = playerItems;
+    }
+
+    public Set<PlayerEffect> getPlayerEffect() {
+        return playerEffect;
+    }
+
+    public void setPlayerEffect(Set<PlayerEffect> playerEffect) {
+        this.playerEffect = playerEffect;
+    }
+
+    public double getIntelligence() {
+        return intelligence;
+    }
+
+    public void setIntelligence(double intelligence) {
+        this.intelligence = intelligence;
+    }
+
+    public double getDexterity() {
+        return dexterity;
+    }
+
+    public void setDexterity(double dexterity) {
+        this.dexterity = dexterity;
+    }
+
+    public double getStrength() {
+        return strength;
+    }
+
+    public void setStrength(double strength) {
+        this.strength = strength;
     }
 }

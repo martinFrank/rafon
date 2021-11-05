@@ -7,18 +7,17 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class PlayerItem extends AbstractEntity{
-
+public class PlayerEffect extends AbstractEntity{
 
     @ManyToOne
     @JoinColumn(name = "player_id")
     private Player player;
 
     @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @JoinColumn(name = "effect_id")
+    private Effect effect;
 
-    private String slot;
+    private int duration; //duration of battle rounds
 
     public Player getPlayer() {
         return player;
@@ -28,20 +27,19 @@ public class PlayerItem extends AbstractEntity{
         this.player = player;
     }
 
-    public Item getItem() {
-        return item;
+    public Effect getEffect() {
+        return effect;
     }
 
-    public void setItem(Item item) {
-        this.item = item;
+    public void setEffect(Effect effect) {
+        this.effect = effect;
     }
 
-    public String getSlot() {
-        return slot;
+    public int getDuration() {
+        return duration;
     }
 
-    public void setSlot(String slot) {
-        this.slot = slot;
+    public void setDuration(int duration) {
+        this.duration = duration;
     }
-
 }
