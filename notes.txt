@@ -5,6 +5,9 @@ https://www.baeldung.com/jpa-many-to-many
 https://www.baeldung.com/hibernate-one-to-many
 
 
+https://en.wikipedia.org/wiki/HAProxy
+
+
 https://vaadin.com/docs/latest/flow/advanced/loading-resources#resource-cheat-sheet
 
 
